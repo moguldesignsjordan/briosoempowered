@@ -635,52 +635,58 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 
 /* ============================================================
-   ROSTER   1 → 2 → 4
+   ROSTER (single featured client)
    ============================================================ */
 
-.roster { display: grid; grid-template-columns: 1fr; gap: var(--gap); }
-@media (min-width: 520px)  { .roster { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1100px) { .roster { grid-template-columns: repeat(4, 1fr); } }
-
-.talent {
-  position: relative;
-  aspect-ratio: 4 / 3;                    /* wide on phones so a 1-col card isn't a tower */
-  overflow: hidden;
-  border: var(--bd) solid var(--line-soft); border-radius: var(--r); isolation: isolate;
-  transition: transform 280ms var(--pop), border-color var(--fast);
+.feature { display: grid; grid-template-columns: 1fr; gap: 1.8rem; align-items: center; }
+@media (min-width: 900px) {
+  .feature { grid-template-columns: 0.85fr 1fr; gap: clamp(2rem, 4vw, 3.6rem); }
 }
-@media (min-width: 520px) { .talent { aspect-ratio: 3 / 4; } }
 
-.talent-art { position: absolute; inset: 0; z-index: -2; transition: transform 600ms var(--ease), filter 400ms; filter: grayscale(.55); }
-.talent::after {
+/* Tilted gold slab peeking out behind the portrait, sticker-style. */
+.feature-shot { position: relative; isolation: isolate; }
+.feature-shot::before {
   content: ''; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(180deg, transparent 28%, rgba(11,11,12,.94) 92%);
+  background: var(--gold); border-radius: var(--r);
+  transform: rotate(-2.5deg) translate(10px, 10px);
 }
-.talent-body { position: absolute; inset: auto 0 0 0; padding: 1.2rem 1.1rem; }
-@media (min-width: 700px) { .talent-body { padding: 1.4rem 1.3rem; } }
-
-.talent-body em {
-  font-style: normal; font-size: .56rem; font-weight: 700;
-  letter-spacing: .16em; text-transform: uppercase;
-  color: #0b0b0c; background: var(--gold);
-  padding: .35em .8em; border-radius: var(--pill);
-  display: inline-block; transform: rotate(-2deg);
+.feature-shot img {
+  width: 100%; height: auto;
+  aspect-ratio: 4 / 5; object-fit: cover; object-position: center;
+  border: var(--bd) solid var(--line-soft); border-radius: var(--r);
+  background: var(--ink-2);
+  filter: grayscale(.35) contrast(1.04);
+  transition: filter 400ms var(--ease), transform 400ms var(--pop);
 }
-.talent-body h5 {
-  font-family: var(--display); font-size: 1.15rem; text-transform: uppercase;
-  letter-spacing: -0.015em; margin-top: .55rem;
-}
-@media (min-width: 700px) { .talent-body h5 { font-size: 1.3rem; } }
-
-/* Touch can't hover, so the bio is always visible there; desktop keeps the reveal. */
-.talent-body p { font-size: .78rem; color: var(--muted); margin-top: .35rem; }
 @media (hover: hover) and (pointer: fine) {
-  .talent-body { transform: translateY(10px); transition: transform 300ms var(--pop); }
-  .talent-body p { opacity: 0; max-height: 0; overflow: hidden; transition: opacity 260ms var(--ease), max-height 320ms var(--ease); }
-  .talent:hover { transform: translateY(-8px) rotate(-1.2deg); border-color: var(--gold); }
-  .talent:hover .talent-art { transform: scale(1.09); filter: grayscale(0); }
-  .talent:hover .talent-body { transform: none; }
-  .talent:hover .talent-body p { opacity: 1; max-height: 90px; }
+  .feature-shot:hover img { filter: grayscale(0); transform: translate(-4px, -4px); }
+}
+
+.feature-tag {
+  display: inline-block;
+  font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: #0b0b0c; background: var(--gold);
+  padding: .45em .95em; border-radius: var(--pill);
+  transform: rotate(-2deg);
+}
+.feature-body h3 { margin: 1rem 0 .9rem; }
+.feature-body .lede { font-size: .98rem; }
+@media (min-width: 700px) { .feature-body .lede { font-size: 1.05rem; } }
+
+.feature-stats {
+  display: flex; flex-wrap: wrap; gap: 1.6rem;
+  margin: 1.5rem 0 1.4rem; padding-top: 1.2rem;
+  border-top: var(--bd) solid var(--line-soft);
+}
+.feature-stats b {
+  display: block; font-family: var(--display); font-weight: 400;
+  font-size: 1.7rem; line-height: 1; letter-spacing: -0.02em; color: var(--gold);
+}
+@media (min-width: 700px) { .feature-stats b { font-size: 2rem; } }
+.feature-stats span {
+  display: block; margin-top: .4rem;
+  font-size: .58rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: rgba(244,244,240,.5);
 }
 
 /* ============================================================

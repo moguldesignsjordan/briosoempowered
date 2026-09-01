@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import heroImg from './assets/hero.png'
+import baldoImg from './assets/baldo.jpg'
 
 /* ------------------------------------------------------------------
    data
@@ -65,12 +66,19 @@ const STATS = [
   ['11', 'Years Operating'],
 ]
 
-const ROSTER = [
-  { name: 'Maya Oduya', tag: 'Recording Artist', art: 'art-a', note: 'Two platinum singles and a headline tour across nine markets.' },
-  { name: 'Devon Cole', tag: 'Professional Athlete', art: 'art-b', note: 'Seven-figure endorsement book rebuilt in a single off-season.' },
-  { name: 'Ines Marchetti', tag: 'Creative Director', art: 'art-c', note: 'Campaign work for three heritage houses in two years.' },
-  { name: 'August Reyes', tag: 'Founder & Investor', art: 'art-d', note: 'Exit at 31, now allocating across property and private credit.' },
-]
+/* The roster is one featured client. To show several again, make this an
+   array and swap the .feature layout for a grid. */
+const FEATURED = {
+  name: 'Baldo Mindset',
+  tag: 'Creator & Speaker',
+  bio: 'Mindset and self-development content that turned a personal rebuild into an audience. We handle the partnerships, the press, and the long-term plan behind the channel.',
+  image: baldoImg,
+  alt: 'Baldo Mindset holding his YouTube Silver Creator Award',
+  stats: [
+    ['100K+', 'Subscribers'],
+    ['Silver', 'YouTube Award'],
+  ],
+}
 
 const PROPS = [
   {
@@ -429,17 +437,27 @@ function Roster() {
           <div className="rule" />
         </Reveal>
 
-        <div className="roster">
-          {ROSTER.map((p, i) => (
-            <Reveal as="article" className="talent" key={p.name} delay={i * 90}>
-              <div className={`talent-art ${p.art}`} />
-              <div className="talent-body">
-                <em>{p.tag}</em>
-                <h5>{p.name}</h5>
-                <p>{p.note}</p>
-              </div>
-            </Reveal>
-          ))}
+        <div className="feature">
+          <Reveal className="feature-shot">
+            <img src={FEATURED.image} alt={FEATURED.alt} width="1638" height="2048" loading="lazy" />
+          </Reveal>
+
+          <Reveal className="feature-body" delay={120}>
+            <span className="feature-tag">{FEATURED.tag}</span>
+            <h3 className="display h-lg">{FEATURED.name}</h3>
+            <p className="lede">{FEATURED.bio}</p>
+
+            <div className="feature-stats">
+              {FEATURED.stats.map(([value, label]) => (
+                <div key={label}>
+                  <b>{value}</b>
+                  <span>{label}</span>
+                </div>
+              ))}
+            </div>
+
+            <a className="btn-line" href="#contact">Work With Us <Arrow /></a>
+          </Reveal>
         </div>
       </div>
     </section>
