@@ -316,16 +316,6 @@ function Hero() {
           <a className="btn btn-gold" href="#contact">Let’s Talk <Arrow /></a>
           <a className="btn btn-ghost" href="#divisions">See the Work</a>
         </Reveal>
-
-        <Reveal className="hero-proof" delay={340}>
-          <p>Backed by the rooms that matter</p>
-          <div className="proof-row">
-            <span>Meridian Sound</span>
-            <span>Halcyon Group</span>
-            <span>Vestry &amp; Co.</span>
-            <span className="stars" aria-label="Rated 5.0 out of 5">5.0 ★</span>
-          </div>
-        </Reveal>
       </div>
 
       <div className="scroll-cue" aria-hidden="true">

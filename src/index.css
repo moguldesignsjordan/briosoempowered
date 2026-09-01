@@ -450,26 +450,6 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   .hero-actions .btn { width: auto; }
 }
 
-.hero-proof { margin-top: 2.6rem; }
-@media (min-width: 700px) { .hero-proof { margin-top: 3.8rem; } }
-.hero-proof p {
-  font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(244,244,240,.4); margin-bottom: .9rem; font-weight: 700;
-}
-.proof-row { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
-.proof-row span {
-  font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
-  color: var(--muted);
-  border: var(--bd) solid var(--line-soft); border-radius: var(--pill);
-  padding: .4rem .85rem;
-  transition: color var(--fast), border-color var(--fast), transform var(--fast) var(--pop);
-}
-@media (min-width: 480px) { .proof-row { gap: .7rem; } .proof-row span { font-size: .78rem; padding: .45rem 1rem; } }
-@media (hover: hover) and (pointer: fine) {
-  .proof-row span:hover { color: var(--gold); border-color: var(--gold); transform: translateY(-3px) rotate(-2deg); }
-}
-.stars { color: #0b0b0c !important; background: var(--gold); border-color: var(--gold) !important; letter-spacing: .1em; }
-
 /* Cue is decorative and crowds short screens, so it only shows when there's height for it. */
 .scroll-cue { display: none; }
 @media (min-height: 700px) and (min-width: 700px) {
