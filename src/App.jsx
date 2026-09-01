@@ -749,9 +749,7 @@ function Footer() {
         <div className="credit">
           <span>Created with <span className="heart" aria-hidden="true">❤</span><span className="sr-only">love</span> by</span>
           <a href="https://moguldesignagency.com/" target="_blank" rel="noreferrer">
-            <span className="credit-chip" aria-hidden="true">
-              <img className="credit-mark" src={mogulLogo} alt="" width="13" height="19" loading="lazy" />
-            </span>
+            <img className="credit-mark" src={mogulLogo} alt="" width="15" height="22" loading="lazy" />
             Mogul Design Agency
           </a>
         </div>

@@ -1010,14 +1010,12 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   color: rgba(244,244,240,.62);
   transition: color var(--fast) var(--ease);
 }
-.credit-chip {
-  display: grid; place-items: center; width: 30px; height: 30px; flex: none;
-  border-radius: 9px; background: var(--bone);
-  transition: transform 260ms var(--pop), box-shadow var(--fast) var(--ease);
+.credit-mark {
+  width: auto; height: 22px; display: block; flex: none;
+  transition: transform 260ms var(--pop), filter var(--fast) var(--ease);
 }
-.credit-mark { width: auto; height: 19px; display: block; }
 @media (hover: hover) and (pointer: fine) {
   .credit a:hover { color: var(--gold); }
-  .credit a:hover .credit-chip { transform: rotate(-6deg) scale(1.08); box-shadow: 0 0 18px rgba(232, 62, 140, .35); }
+  .credit a:hover .credit-mark { transform: rotate(-6deg) scale(1.1); filter: drop-shadow(0 0 12px rgba(232, 62, 140, .45)); }
 }
 @media (min-width: 700px) { .credit { justify-content: flex-start; padding-bottom: 1.6rem; } }
