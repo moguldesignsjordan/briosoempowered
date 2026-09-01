@@ -322,7 +322,7 @@ function Hero() {
         </Reveal>
 
         <Reveal as="p" className="lede" delay={180}>
-          We rep creators, artists, and founders — and the realtors and properties
+          We rep creators, artists, and founders, plus the realtors and properties
           that turn a hot run into permanent money. One desk. Two disciplines.
           Zero conflicting interests.
         </Reveal>
