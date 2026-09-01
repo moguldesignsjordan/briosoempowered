@@ -73,6 +73,32 @@ sanity.io/manage (leave "allow credentials" off for the public site; the
 Schemas are in `src/studio/`. `post.js` is scaffolded for a journal but nothing
 on the site reads it yet.
 
+## Deploying (Vercel)
+
+Vercel builds straight from `main`. `vercel.json` sets the Vite framework
+preset and rewrites unknown paths to `index.html` so `/list` and `/manage`
+resolve — the rewrite deliberately excludes `/api/` so the function still runs.
+
+`.env` is gitignored, so **the build has no environment unless you set it in
+Vercel**. Under Project → Settings → Environment Variables, add all four to
+Production and Preview:
+
+| Variable | Value | Exposed to browser |
+| --- | --- | --- |
+| `VITE_SANITY_PROJECT_ID` | the project id | yes, and that is fine |
+| `VITE_SANITY_DATASET` | `production` | yes |
+| `SANITY_PROJECT_ID` | the same project id | no |
+| `SANITY_WRITE_TOKEN` | an Editor token from sanity.io/manage | **no, never** |
+
+Miss the two `VITE_` ones and the site builds with no backend: the board shows
+its empty state. Miss `SANITY_WRITE_TOKEN` and `/list` returns "Submissions are
+not configured yet."
+
+Then add the deployed URL under **API → CORS origins** at sanity.io/manage.
+Two entries: the bare origin for reads, and the same origin with *allow
+credentials* on so `/manage` can log in. Preview deploys get their own
+hostnames, so add those too if you plan to use them.
+
 ## Design system
 
 "Acid Court": concrete black with light champagne gold and a warm amber

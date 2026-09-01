@@ -6,9 +6,11 @@
  * a DRAFT: nothing a stranger types reaches the site until it is published
  * from /manage. The token is never sent to the browser.
  *
- * Deploy target: Vercel (Node runtime). Netlify Functions work the same with
- * a thin wrapper around the handler.
+ * Deploy target: Vercel (Node runtime). Requires SANITY_WRITE_TOKEN and
+ * SANITY_PROJECT_ID in the project's Environment Variables — never in the repo.
  */
+
+export const config = { maxDuration: 15 }
 
 const PROJECT_ID = process.env.SANITY_PROJECT_ID || process.env.VITE_SANITY_PROJECT_ID
 const DATASET = process.env.SANITY_DATASET || 'production'
