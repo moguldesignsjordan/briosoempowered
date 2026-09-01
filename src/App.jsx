@@ -175,7 +175,7 @@ function Icon({ name, className = 'service-icon' }) {
 }
 
 const SOCIALS = [
-  ['Instagram', 'https://instagram.com', 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm5 5.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9ZM17.8 6.2h.01'],
+  ['Instagram', 'https://www.instagram.com/brioso_empowered.llc', 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm5 5.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9ZM17.8 6.2h.01'],
   ['LinkedIn', 'https://linkedin.com', 'M4 9v11M4 4.5v.01M9.5 20V9m0 4.5c0-2.5 1.6-4 3.8-4S18 11 18 13.8V20'],
   ['X', 'https://x.com', 'M3 3l8 10.5L3.6 21M20.4 3l-7.6 8M21 21l-8.4-11'],
 ]
@@ -207,16 +207,81 @@ function useReveal() {
   }, [])
 }
 
-function Reveal({ as: Tag = 'div', delay = 0, className = '', children, ...rest }) {
+function Reveal({ as: Tag = 'div', delay = 0, from = '', className = '', children, ...rest }) {
   return (
     <Tag
-      className={`reveal ${className}`.trim()}
+      className={`reveal ${from ? `rv-${from}` : ''} ${className}`.replace(/\s+/g, ' ').trim()}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
       {...rest}
     >
       {children}
     </Tag>
   )
+}
+
+/* Thin scroll-progress bar. Reads well on phones where the nav is collapsed. */
+function ScrollProgress() {
+  const bar = useRef(null)
+
+  useEffect(() => {
+    let frame = 0
+    const paint = () => {
+      frame = 0
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      const pct = max > 0 ? Math.min(1, window.scrollY / max) : 0
+      if (bar.current) bar.current.style.transform = `scaleX(${pct})`
+    }
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(paint) }
+    paint()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [])
+
+  return <div className="progress" aria-hidden="true"><i ref={bar} /></div>
+}
+
+const REDUCED = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+/* Counts a stat up once it scrolls into view. Keeps the prefix/suffix intact. */
+function CountUp({ value }) {
+  const el = useRef(null)
+
+  useEffect(() => {
+    const node = el.current
+    const match = /^(\D*)([\d.]+)(.*)$/.exec(value)
+    if (!node || !match || REDUCED() || !('IntersectionObserver' in window)) return
+
+    const [, prefix, digits, suffix] = match
+    const target = parseFloat(digits)
+    const decimals = (digits.split('.')[1] || '').length
+    let frame = 0
+
+    const io = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return
+      io.disconnect()
+      const start = performance.now()
+      const tick = (now) => {
+        const t = Math.min(1, (now - start) / 1100)
+        const eased = 1 - Math.pow(1 - t, 3)
+        node.textContent = prefix + (target * eased).toFixed(decimals) + suffix
+        if (t < 1) frame = requestAnimationFrame(tick)
+      }
+      node.textContent = prefix + (0).toFixed(decimals) + suffix
+      frame = requestAnimationFrame(tick)
+    }, { threshold: 0.5 })
+
+    io.observe(node)
+    return () => { io.disconnect(); if (frame) cancelAnimationFrame(frame) }
+  }, [value])
+
+  return <b ref={el}>{value}</b>
 }
 
 const Arrow = () => (
@@ -320,7 +385,7 @@ function Hero() {
           We build careers,<br />portfolios &amp; <em>legacies</em><span className="dot">.</span>
         </Reveal>
 
-        <Reveal as="p" className="lede" delay={180}>
+        <Reveal as="p" className="lede" delay={180} from="blur">
           We rep creators, artists, and founders, plus the realtors and properties
           that turn a hot run into permanent money. One desk. Two disciplines.
           Zero conflicting interests.
@@ -403,7 +468,7 @@ function Services() {
 
         <div className="services-grid">
           {SERVICES.map((s, i) => (
-            <Reveal as="article" className="service" key={s.title} delay={i * 70}>
+            <Reveal as="article" className="service" key={s.title} delay={i * 70} from="rise">
               <span className="idx">{String(i + 1).padStart(2, '0')}</span>
               <Icon name={s.icon} />
               <h4>{s.title}</h4>
@@ -422,8 +487,8 @@ function Stats() {
       <div className="wrap">
         <div className="stats-grid">
           {STATS.map(([value, label], i) => (
-            <Reveal className="stat" key={label} delay={i * 80}>
-              <b>{value}</b>
+            <Reveal className="stat" key={label} delay={i * 80} from="zoom">
+              <CountUp value={value} />
               <span>{label}</span>
             </Reveal>
           ))}
@@ -444,11 +509,11 @@ function Roster() {
         </Reveal>
 
         <div className="feature">
-          <Reveal className="feature-shot">
+          <Reveal className="feature-shot" from="left">
             <img src={FEATURED.image} alt={FEATURED.alt} width="1638" height="2048" loading="lazy" />
           </Reveal>
 
-          <Reveal className="feature-body" delay={120}>
+          <Reveal className="feature-body" delay={120} from="right">
             <span className="feature-tag">{FEATURED.tag}</span>
             <h3 className="display h-lg">{FEATURED.name}</h3>
             <p className="lede">{FEATURED.bio}</p>
@@ -482,7 +547,7 @@ function Portfolio() {
 
         <div className="portfolio">
           {PROPS.map((p, i) => (
-            <Reveal as="article" className={`prop ${p.size}`} key={p.name} delay={i * 80}>
+            <Reveal as="article" className={`prop ${p.size}`} key={p.name} delay={i * 80} from="zoom">
               <div className={`prop-art ${p.art}`} />
               <span className="prop-tag">{p.tag}</span>
               <h4>{p.name}</h4>
@@ -514,7 +579,7 @@ function Process() {
 
         <div className="process">
           {PROCESS.map(([phase, title, copy], i) => (
-            <Reveal className="step" key={phase} delay={i * 90}>
+            <Reveal className="step" key={phase} delay={i * 90} from="left">
               <div className="step-top">
                 <span className="step-dot" />
                 <span className="step-line" />
@@ -763,6 +828,7 @@ export default function App() {
 
   return (
     <>
+      <ScrollProgress />
       <Nav />
       <main>
         <Hero />
