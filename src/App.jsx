@@ -257,7 +257,6 @@ function Nav() {
       <header className={`nav ${stuck ? 'stuck' : ''}`}>
         <div className="nav-inner wrap">
           <a className="logo" href="#top" aria-label="Brioso Empowered, home">
-            <span className="logo-mark" aria-hidden="true"><span>B</span></span>
             <span className="logo-word">
               <b>BRIOSO</b>
               <small>Empowered LLC</small>
@@ -679,7 +678,6 @@ function Footer() {
         <div className="footer-grid">
           <div>
             <a className="logo" href="#top">
-              <span className="logo-mark" aria-hidden="true"><span>B</span></span>
               <span className="logo-word">
                 <b>BRIOSO</b>
                 <small>Empowered LLC</small>

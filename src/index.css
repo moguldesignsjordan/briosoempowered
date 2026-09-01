@@ -268,16 +268,6 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 
 .logo { display: flex; align-items: center; gap: .65rem; min-width: 0; }
-.logo-mark {
-  width: 40px; height: 40px; flex: none;
-  display: grid; place-items: center;
-  background: var(--gold); color: #0b0b0c;
-  border-radius: 12px;
-  font-family: var(--display); font-size: 1.3rem; line-height: 1;
-  transform: rotate(-4deg);
-  transition: transform var(--fast) var(--pop);
-}
-.logo-mark span { display: block; margin-top: 2px; }
 .logo-word { line-height: 1.05; min-width: 0; }
 .logo-word b {
   font-family: var(--display); font-weight: 400; font-size: 1.05rem;
@@ -290,12 +280,11 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 
 @media (min-width: 480px) {
   .logo { gap: .8rem; }
-  .logo-mark { width: 46px; height: 46px; border-radius: 14px; font-size: 1.5rem; }
   .logo-word b { font-size: 1.3rem; }
   .logo-word small { font-size: .56rem; letter-spacing: .26em; }
 }
 @media (hover: hover) and (pointer: fine) {
-  .logo:hover .logo-mark { transform: rotate(4deg) scale(1.06); }
+  .logo:hover .logo-word small { color: var(--gold-lt); }
 }
 
 /* Desktop nav + CTA are HIDDEN BY DEFAULT and revealed at lg. */
