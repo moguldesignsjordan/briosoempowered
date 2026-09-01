@@ -99,6 +99,24 @@ Two entries: the bare origin for reads, and the same origin with *allow
 credentials* on so `/manage` can log in. Preview deploys get their own
 hostnames, so add those too if you plan to use them.
 
+## Languages
+
+The site ships English and Spanish. All copy lives in `src/i18n/en.js` and
+`src/i18n/es.js`, which are key-for-key identical — add a string to one and add
+it to the other, or the missing language falls back to `undefined` rather than
+to English.
+
+`src/i18n/index.jsx` holds the provider, the `useLang()` hook, and the EN/ES
+toggle in the nav. Language is chosen in this order: a `?lang=es` parameter,
+then whatever the visitor picked last time (localStorage), then the browser's
+own language — so a Spanish-speaking visitor lands on Spanish without touching
+anything. The choice also updates `<html lang>`, which matters for screen
+readers and for how browsers offer to translate the page.
+
+Property content itself is not translated: it is whatever was typed into the
+Studio. If you need bilingual listings, the schema fields would have to become
+localized objects.
+
 ## Design system
 
 "Acid Court": concrete black with light champagne gold and a warm amber

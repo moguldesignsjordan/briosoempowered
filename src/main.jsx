@@ -21,7 +21,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 if (route === 'manage') {
   root.render(
-    <Suspense fallback={<div className="boot">Loading the manager…</div>}>
+    <Suspense fallback={<div className="boot">Loading…</div>}>
       <Manager />
     </Suspense>,
   )

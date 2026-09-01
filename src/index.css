@@ -1227,3 +1227,40 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 .board-cta p { color: var(--muted); font-size: .9rem; margin: 0; }
 @media (min-width: 700px) { .board-cta { margin-top: 2.6rem; } }
+
+/* ============================================================
+   LANGUAGE TOGGLE
+   ============================================================ */
+
+.lang-toggle {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .5rem .7rem; min-height: 38px;
+  background: transparent; cursor: pointer;
+  border: var(--bd) solid var(--line); border-radius: var(--pill);
+  font-family: var(--sans); font-size: .64rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(244, 244, 240, .44);
+  transition: border-color var(--fast), background var(--fast);
+}
+.lang-toggle span { transition: color var(--fast); }
+.lang-toggle span.on { color: var(--gold); }
+.lang-sep { width: 1px; height: 11px; background: var(--line); }
+
+@media (hover: hover) and (pointer: fine) {
+  .lang-toggle:hover { border-color: var(--gold); background: rgba(224, 192, 100, .08); }
+}
+.lang-toggle:active { transform: scale(.96); }
+
+/* In the desktop bar it sits between the links and the CTA. */
+.lang-desk { display: none; }
+@media (min-width: 1100px) { .lang-desk { display: inline-flex; margin-left: .4rem; } }
+
+/* In the drawer it gets its own row, sized for thumbs. */
+.lang-drawer {
+  margin-top: 1.6rem; justify-self: center;
+  padding: .8rem 1.2rem; min-height: var(--tap); font-size: .74rem;
+}
+@media (min-width: 1100px) { .lang-drawer { display: none; } }
+
+/* The light section flips the palette, so the toggle follows. */
+.light .lang-toggle { border-color: rgba(17, 17, 17, .2); color: rgba(17, 17, 17, .5); }

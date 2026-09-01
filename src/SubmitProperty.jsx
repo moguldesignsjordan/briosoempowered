@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { useLang } from './i18n'
 
 const TAGS = ['Acquisition', 'Disposition', 'Development', 'Advisory', 'Rental']
 const EMPTY = {
@@ -20,13 +21,13 @@ const MAX_BYTES = 8 * 1024 * 1024
 
 /* Downscales in the browser before upload. A phone photo is often 6MB+, and
    the card never renders wider than 1600px. */
-function shrink(file) {
+function shrink(file, t) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
-    reader.onerror = () => reject(new Error('Could not read that file'))
+    reader.onerror = () => reject(new Error(t.submit.errRead))
     reader.onload = () => {
       const img = new Image()
-      img.onerror = () => reject(new Error('That file is not a readable image'))
+      img.onerror = () => reject(new Error(t.submit.errImage))
       img.onload = () => {
         const scale = Math.min(1, 1600 / Math.max(img.width, img.height))
         const canvas = document.createElement('canvas')
@@ -42,6 +43,7 @@ function shrink(file) {
 }
 
 export default function SubmitProperty() {
+  const { t } = useLang()
   const [form, setForm] = useState(EMPTY)
   const [meta, setMeta] = useState(EMPTY_META)
   const [photo, setPhoto] = useState(null)
@@ -59,11 +61,11 @@ export default function SubmitProperty() {
     if (!file) return
     setError('')
     if (file.size > MAX_BYTES * 3) {
-      setError('That image is very large. Please pick one under 24MB.')
+      setError(t.submit.errTooBig)
       return
     }
     try {
-      setPhoto({ dataUrl: await shrink(file), fileName: file.name })
+      setPhoto({ dataUrl: await shrink(file, t), fileName: file.name })
     } catch (err) {
       setError(err.message)
     }
@@ -85,7 +87,10 @@ export default function SubmitProperty() {
         }),
       })
       const body = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(body.error || 'Something went wrong.')
+      if (!res.ok) {
+        // The API answers with a stable code so the message can be localized here.
+        throw new Error(t.submit.errors[body.code] || body.error || t.submit.errGeneric)
+      }
 
       setStatus('sent')
       setForm(EMPTY)
@@ -102,13 +107,10 @@ export default function SubmitProperty() {
       <section className="section" id="submit">
         <div className="wrap narrow">
           <div className="form-sent" role="status">
-            <b>Submitted.</b>
-            <p>
-              Thank you. Your property is with our team for review. We will confirm by
-              email once it is on the board, usually within one business day.
-            </p>
+            <b>{t.submit.sentTitle}</b>
+            <p>{t.submit.sentBody}</p>
             <button className="btn btn-ghost" type="button" onClick={() => setStatus('idle')}>
-              Submit another
+              {t.submit.another}
             </button>
           </div>
         </div>
@@ -120,38 +122,37 @@ export default function SubmitProperty() {
     <section className="section" id="submit">
       <div className="wrap narrow">
         <div className="section-head">
-          <span className="eyebrow center">List With Us</span>
-          <h2 className="display h-lg">Submit a property<span className="dot">.</span></h2>
+          <span className="eyebrow center">{t.submit.eyebrow}</span>
+          <h2 className="display h-lg">{t.submit.title}<span className="dot">.</span></h2>
           <div className="rule" />
-          <p className="lede center">
-            Tell us about the asset. A partner reviews every submission before it goes on
-            the board, so nothing publishes until we have spoken.
-          </p>
+          <p className="lede center">{t.submit.lede}</p>
         </div>
 
         <form className="form form-wide" onSubmit={submit} noValidate={false}>
           <fieldset disabled={status === 'sending'}>
-            <legend className="field-group">The property</legend>
+            <legend className="field-group">{t.submit.groupProperty}</legend>
 
             <div className="field">
-              <label htmlFor="p-name">Property name or address</label>
+              <label htmlFor="p-name">{t.submit.name}</label>
               <input
                 id="p-name" type="text" required maxLength={120}
-                placeholder="e.g. The Ellsworth Residences"
+                placeholder={t.submit.namePlaceholder}
                 value={form.name} onChange={set('name')}
               />
             </div>
 
             <div className="field">
-              <label htmlFor="p-tag">Deal type</label>
+              <label htmlFor="p-tag">{t.submit.tag}</label>
               <select id="p-tag" required value={form.tag} onChange={set('tag')}>
-                <option value="">Choose one</option>
-                {TAGS.map((t) => <option key={t} value={t}>{t}</option>)}
+                <option value="">{t.submit.tagPlaceholder}</option>
+                {TAGS.map((tag) => (
+                  <option key={tag} value={tag}>{t.submit.tags[tag]}</option>
+                ))}
               </select>
             </div>
 
             <div className="field">
-              <label htmlFor="p-photo">Photo</label>
+              <label htmlFor="p-photo">{t.submit.photo}</label>
               <div className="upload">
                 {photo ? (
                   <div className="upload-preview">
@@ -162,15 +163,15 @@ export default function SubmitProperty() {
                         type="button" className="btn-line"
                         onClick={() => { setPhoto(null); if (fileInput.current) fileInput.current.value = '' }}
                       >
-                        Remove
+                        {t.submit.photoRemove}
                       </button>
                     </div>
                   </div>
                 ) : (
                   <label className="upload-drop" htmlFor="p-photo">
                     <span className="upload-plus" aria-hidden="true">+</span>
-                    <b>Add a photo</b>
-                    <small>JPG, PNG, or WebP. Landscape shots read best.</small>
+                    <b>{t.submit.photoAdd}</b>
+                    <small>{t.submit.photoHint}</small>
                   </label>
                 )}
                 <input
@@ -182,18 +183,18 @@ export default function SubmitProperty() {
             </div>
 
             <div className="field">
-              <label>Highlights <span className="opt">up to three</span></label>
+              <label>{t.submit.highlights} <span className="opt">{t.submit.highlightsOpt}</span></label>
               <div className="meta-rows">
                 {meta.map((row, i) => (
                   <div className="meta-row" key={i}>
                     <input
-                      type="text" maxLength={40} placeholder="Label"
-                      aria-label={`Highlight ${i + 1} label`}
+                      type="text" maxLength={40} placeholder={t.submit.hLabel}
+                      aria-label={t.submit.hAria(i + 1, t.submit.hLabel)}
                       value={row.label} onChange={setMetaAt(i, 'label')}
                     />
                     <input
-                      type="text" maxLength={40} placeholder="Value"
-                      aria-label={`Highlight ${i + 1} value`}
+                      type="text" maxLength={40} placeholder={t.submit.hValue}
+                      aria-label={t.submit.hAria(i + 1, t.submit.hValue)}
                       value={row.value} onChange={setMetaAt(i, 'value')}
                     />
                   </div>
@@ -203,30 +204,30 @@ export default function SubmitProperty() {
           </fieldset>
 
           <fieldset disabled={status === 'sending'}>
-            <legend className="field-group">You</legend>
+            <legend className="field-group">{t.submit.groupYou}</legend>
 
             <div className="field">
-              <label htmlFor="p-cname">Your name</label>
-              <input id="p-cname" type="text" maxLength={120} placeholder="Full name"
+              <label htmlFor="p-cname">{t.submit.yourName}</label>
+              <input id="p-cname" type="text" maxLength={120} placeholder={t.submit.yourNamePlaceholder}
                 value={form.contactName} onChange={set('contactName')} />
             </div>
 
             <div className="field">
-              <label htmlFor="p-email">Email</label>
+              <label htmlFor="p-email">{t.submit.email}</label>
               <input id="p-email" type="email" required maxLength={160} placeholder="you@example.com"
                 value={form.contactEmail} onChange={set('contactEmail')} />
             </div>
 
             <div className="field">
-              <label htmlFor="p-phone">Phone <span className="opt">optional</span></label>
+              <label htmlFor="p-phone">{t.submit.phone} <span className="opt">{t.submit.optional}</span></label>
               <input id="p-phone" type="tel" maxLength={40} placeholder="(555) 555-5555"
                 value={form.contactPhone} onChange={set('contactPhone')} />
             </div>
 
             <div className="field">
-              <label htmlFor="p-notes">Anything else <span className="opt">optional</span></label>
+              <label htmlFor="p-notes">{t.submit.notes} <span className="opt">{t.submit.optional}</span></label>
               <textarea id="p-notes" maxLength={2000} rows={4}
-                placeholder="Timeline, price expectations, condition, whatever matters."
+                placeholder={t.submit.notesPlaceholder}
                 value={form.notes} onChange={set('notes')} />
             </div>
           </fieldset>
@@ -240,11 +241,9 @@ export default function SubmitProperty() {
           {error && <p className="form-error" role="alert">{error}</p>}
 
           <button type="submit" className="btn btn-gold" disabled={status === 'sending'}>
-            {status === 'sending' ? 'Submitting…' : 'Submit Property'}
+            {status === 'sending' ? t.submit.submitting : t.submit.submit}
           </button>
-          <p className="form-note">
-            Reviewed before publishing. We never share your contact information.
-          </p>
+          <p className="form-note">{t.submit.note}</p>
         </form>
       </div>
     </section>

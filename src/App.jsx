@@ -4,110 +4,26 @@ import mogulLogo from './assets/mogul.png'
 import baldoImg from './assets/baldo.jpg'
 import { query, sanityReady, imageUrl, PROPERTY_QUERY } from './lib/sanity'
 import SubmitProperty from './SubmitProperty.jsx'
+import { LangProvider, LangToggle, useLang } from './i18n'
 
 /* ------------------------------------------------------------------
    data
    ------------------------------------------------------------------ */
 
 const NAV = [
-  ['Divisions', '#divisions'],
-  ['Services', '#services'],
-  ['Roster', '#roster'],
-  ['Portfolio', '#portfolio'],
-  ['List a Property', '/list'],
-  ['Process', '#process'],
-  ['Contact', '#contact'],
+  ['divisions', '#divisions'],
+  ['services', '#services'],
+  ['roster', '#roster'],
+  ['portfolio', '#portfolio'],
+  ['list', '/list'],
+  ['process', '#process'],
+  ['contact', '#contact'],
 ]
 
-const MARQUEE = [
-  'Talent Management',
-  'Brand Partnerships',
-  'Luxury Acquisitions',
-  'Portfolio Strategy',
-  'Tour & Touring Ops',
-  'Investment Advisory',
-  'Career Architecture',
-  'Off-Market Access',
-]
+/* Only the parts that are not copy. Text lives in src/i18n. */
+const FEATURED = { image: baldoImg }
 
-const SERVICES = [
-  {
-    title: 'Career Architecture',
-    copy: 'Positioning, deal flow, and long-horizon planning for creators, artists, and founders who intend to still be relevant in a decade.',
-    icon: 'compass',
-  },
-  {
-    title: 'Partnerships & Press',
-    copy: 'Endorsements and equity deals that read as choices, not paychecks, plus narrative control across editorial, broadcast, and social.',
-    icon: 'mic',
-  },
-  {
-    title: 'Business Build-Out',
-    copy: 'From idea to entity. Strategy, pricing, and positioning, then the LLC, EIN, operating agreement, and banking filed clean the first time.',
-    icon: 'growth',
-  },
-  {
-    title: 'Credit & Capital',
-    copy: 'Repair the profile, restructure the debt, and learn the levers. Credit is the cheapest capital you will ever raise, so we teach you to use it.',
-    icon: 'card',
-  },
-  {
-    title: 'Real Estate & Portfolio',
-    copy: 'Off-market sourcing, cash-flowing acquisitions, and hold-refinance-exit modeling run against your tax posture and the next ten years.',
-    icon: 'key',
-  },
-  {
-    title: 'Ownership & Legacy',
-    copy: 'Proven turnkey ventures built end to end, structured into trusts and succession, with the mentorship that keeps the operator sharp.',
-    icon: 'shield',
-  },
-]
-
-const STATS = [
-  ['$480M+', 'Transacted Volume'],
-  ['120+', 'Clients Represented'],
-  ['18', 'Markets Served'],
-  ['11', 'Years Operating'],
-]
-
-/* The roster is one featured client. To show several again, make this an
-   array and swap the .feature layout for a grid. */
-const FEATURED = {
-  name: 'Baldo Mindset',
-  tag: 'Creator & Speaker',
-  bio: 'Mindset and self-development content that turned a personal rebuild into an audience. We handle the partnerships, the press, and the long-term plan behind the channel.',
-  image: baldoImg,
-  alt: 'Baldo Mindset holding his YouTube Silver Creator Award',
-  stats: [
-    ['100K+', 'Subscribers'],
-    ['Silver', 'YouTube Award'],
-  ],
-}
-
-const PROCESS = [
-  ['Phase 01', 'Discovery', 'A closed-door assessment of where you actually stand: income, exposure, leverage, and the reputation you have not yet monetized.'],
-  ['Phase 02', 'Blueprint', 'We return a written plan: the deals to chase, the ones to decline, and the structure that holds it all together.'],
-  ['Phase 03', 'Execution', 'Negotiation, diligence, and closing run by our desk. You approve; we handle the rest of the room.'],
-  ['Phase 04', 'Stewardship', 'Quarterly review against the blueprint, because the plan that worked last year is rarely the one that works next year.'],
-]
-
-const QUOTES = [
-  {
-    text: 'They turned a career into an institution.',
-    name: 'Maya Oduya',
-    role: 'Recording Artist',
-  },
-  {
-    text: 'The only team that told me which deals to walk away from.',
-    name: 'Devon Cole',
-    role: 'Professional Athlete',
-  },
-  {
-    text: 'I closed off-market in eleven days. Nothing about it felt rushed.',
-    name: 'August Reyes',
-    role: 'Founder & Investor',
-  },
-]
+const SERVICE_ICONS = ['compass', 'mic', 'growth', 'card', 'key', 'shield']
 
 const YEAR = new Date().getFullYear()
 
@@ -261,6 +177,7 @@ const Arrow = () => (
    ------------------------------------------------------------------ */
 
 function Nav({ page = 'home' }) {
+  const { t } = useLang()
   /* Off the home page the in-page anchors need to point back at it. */
   const to = (href) => (href.startsWith('#') && page !== 'home' ? `/${href}` : href)
   const [stuck, setStuck] = useState(false)
@@ -288,27 +205,29 @@ function Nav({ page = 'home' }) {
     <>
       <header className={`nav ${stuck ? 'stuck' : ''}`}>
         <div className="nav-inner wrap">
-          <a className="logo" href={to('#top')} aria-label="Brioso Empowered, home">
+          <a className="logo" href={to('#top')} aria-label={t.nav.home}>
             <span className="logo-word">
               <b>BRIOSO</b>
               <small>Empowered LLC</small>
             </span>
           </a>
 
-          <nav className="nav-links" aria-label="Primary">
-            {NAV.map(([label, href]) => (
-              <a key={href} href={to(href)}>{label}</a>
+          <nav className="nav-links" aria-label={t.nav.primary}>
+            {NAV.map(([key, href]) => (
+              <a key={href} href={to(href)}>{t.nav[key]}</a>
             ))}
           </nav>
 
+          <LangToggle className="lang-desk" />
+
           <a className="btn btn-gold" href={to('#contact')}>
-            Book a Consult <Arrow />
+            {t.nav.consult} <Arrow />
           </a>
 
           <button
             type="button"
             className={`burger ${open ? 'open' : ''}`}
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
@@ -318,17 +237,20 @@ function Nav({ page = 'home' }) {
       </header>
 
       <div className={`drawer ${open ? 'open' : ''}`} aria-hidden={!open}>
-        {NAV.map(([label, href]) => (
+        {NAV.map(([key, href]) => (
           <a key={href} href={to(href)} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)}>
-            {label}
+            {t.nav[key]}
           </a>
         ))}
+        <LangToggle className="lang-drawer" />
       </div>
     </>
   )
 }
 
 function Hero() {
+  const { t } = useLang()
+
   return (
     <section className="hero" id="top">
       <div className="hero-bg" aria-hidden="true">
@@ -346,26 +268,24 @@ function Hero() {
       <div className="grain" aria-hidden="true" />
 
       <div className="hero-inner">
-        <Reveal as="span" className="eyebrow">Talent × Real Estate</Reveal>
+        <Reveal as="span" className="eyebrow">{t.hero.eyebrow}</Reveal>
 
         <Reveal as="h1" className="display h-xl" delay={90}>
-          We build careers,<br />portfolios &amp; <em>legacies</em><span className="dot">.</span>
+          {t.hero.h1a}<br />{t.hero.h1b} <em>{t.hero.h1em}</em><span className="dot">.</span>
         </Reveal>
 
         <Reveal as="p" className="lede" delay={180} from="blur">
-          We rep creators, artists, and founders, plus the realtors and properties
-          that turn a hot run into permanent money. One desk. Two disciplines.
-          Zero conflicting interests.
+          {t.hero.lede}
         </Reveal>
 
         <Reveal className="hero-actions" delay={260}>
-          <a className="btn btn-gold" href="#contact">Let’s Talk <Arrow /></a>
-          <a className="btn btn-ghost" href="#divisions">See the Work</a>
+          <a className="btn btn-gold" href="#contact">{t.hero.cta} <Arrow /></a>
+          <a className="btn btn-ghost" href="#divisions">{t.hero.ghost}</a>
         </Reveal>
       </div>
 
       <div className="scroll-cue" aria-hidden="true">
-        <span>Scroll</span>
+        <span>{t.hero.scroll}</span>
         <i />
       </div>
     </section>
@@ -373,7 +293,8 @@ function Hero() {
 }
 
 function Marquee() {
-  const items = [...MARQUEE, ...MARQUEE]
+  const { t } = useLang()
+  const items = [...t.marquee, ...t.marquee]
   return (
     <div className="marquee" aria-hidden="true">
       <div className="marquee-track">
@@ -384,60 +305,43 @@ function Marquee() {
 }
 
 function Divisions() {
+  const { t } = useLang()
+
   return (
     <section id="divisions" className="divisions">
-      <article className="division">
-        <div className="division-art art-talent" />
-        <span className="num">01 / Talent</span>
-        <h3 className="display h-lg">Talent Management</h3>
-        <p>
-          Full representation for people whose name is the business. We run the deals,
-          the room, and the ten-year plan behind both.
-        </p>
-        <ul>
-          <li>Contract negotiation &amp; deal structuring</li>
-          <li>Brand partnerships and equity endorsements</li>
-          <li>Publicity, press, and narrative strategy</li>
-          <li>Touring, appearance, and calendar operations</li>
-        </ul>
-        <a className="btn-line" href="#roster">Meet the Roster <Arrow /></a>
-      </article>
-
-      <article className="division">
-        <div className="division-art art-realty" />
-        <span className="num">02 / Realty</span>
-        <h3 className="display h-lg">Real Estate Advisory</h3>
-        <p>
-          Acquisition, disposition, and portfolio strategy for clients whose income
-          arrives in bursts and needs somewhere permanent to live.
-        </p>
-        <ul>
-          <li>Off-market sourcing and private acquisitions</li>
-          <li>Portfolio modeling and hold/exit analysis</li>
-          <li>Development and value-add advisory</li>
-          <li>Entity structuring and succession planning</li>
-        </ul>
-        <a className="btn-line" href="#portfolio">See the Portfolio <Arrow /></a>
-      </article>
+      {t.divisions.map((d, i) => (
+        <article className="division" key={d.num}>
+          <div className={`division-art ${i === 0 ? 'art-talent' : 'art-realty'}`} />
+          <span className="num">{d.num}</span>
+          <h3 className="display h-lg">{d.title}</h3>
+          <p>{d.copy}</p>
+          <ul>
+            {d.items.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+          <a className="btn-line" href={d.href}>{d.link} <Arrow /></a>
+        </article>
+      ))}
     </section>
   )
 }
 
 function Services() {
+  const { t } = useLang()
+
   return (
     <section className="section" id="services">
       <div className="wrap">
         <Reveal className="section-head">
-          <span className="eyebrow center">What We Do</span>
-          <h2 className="display h-lg">Six lanes, one desk<span className="dot">.</span></h2>
+          <span className="eyebrow center">{t.services.eyebrow}</span>
+          <h2 className="display h-lg">{t.services.title}<span className="dot">.</span></h2>
           <div className="rule" />
         </Reveal>
 
         <div className="services-grid">
-          {SERVICES.map((s, i) => (
+          {t.services.items.map((s, i) => (
             <Reveal as="article" className="service" key={s.title} delay={i * 70} from="rise">
               <span className="idx">{String(i + 1).padStart(2, '0')}</span>
-              <Icon name={s.icon} />
+              <Icon name={SERVICE_ICONS[i]} />
               <h4>{s.title}</h4>
               <p>{s.copy}</p>
             </Reveal>
@@ -449,11 +353,13 @@ function Services() {
 }
 
 function Stats() {
+  const { t } = useLang()
+
   return (
     <section className="stats">
       <div className="wrap">
         <div className="stats-grid">
-          {STATS.map(([value, label], i) => (
+          {t.stats.map(([value, label], i) => (
             <Reveal className="stat" key={label} delay={i * 80} from="zoom">
               <CountUp value={value} />
               <span>{label}</span>
@@ -466,27 +372,29 @@ function Stats() {
 }
 
 function Roster() {
+  const { t } = useLang()
+
   return (
     <section className="section" id="roster">
       <div className="wrap">
         <Reveal className="section-head">
-          <span className="eyebrow center">The Roster</span>
-          <h2 className="display h-lg">Who we run with<span className="dot">.</span></h2>
+          <span className="eyebrow center">{t.roster.eyebrow}</span>
+          <h2 className="display h-lg">{t.roster.title}<span className="dot">.</span></h2>
           <div className="rule" />
         </Reveal>
 
         <div className="feature">
           <Reveal className="feature-shot" from="left">
-            <img src={FEATURED.image} alt={FEATURED.alt} width="1638" height="2048" loading="lazy" />
+            <img src={FEATURED.image} alt={t.roster.alt} width="1638" height="2048" loading="lazy" />
           </Reveal>
 
           <Reveal className="feature-body" delay={120} from="right">
-            <span className="feature-tag">{FEATURED.tag}</span>
-            <h3 className="display h-lg">{FEATURED.name}</h3>
-            <p className="lede">{FEATURED.bio}</p>
+            <span className="feature-tag">{t.roster.tag}</span>
+            <h3 className="display h-lg">Baldo Mindset</h3>
+            <p className="lede">{t.roster.bio}</p>
 
             <div className="feature-stats">
-              {FEATURED.stats.map(([value, label]) => (
+              {t.roster.stats.map(([value, label]) => (
                 <div key={label}>
                   <b>{value}</b>
                   <span>{label}</span>
@@ -494,7 +402,7 @@ function Roster() {
               ))}
             </div>
 
-            <a className="btn-line" href="#contact">Work With Us <Arrow /></a>
+            <a className="btn-line" href="#contact">{t.roster.cta} <Arrow /></a>
           </Reveal>
         </div>
       </div>
@@ -523,14 +431,15 @@ function useProperties() {
 }
 
 function Portfolio() {
+  const { t } = useLang()
   const { status, items } = useProperties()
 
   return (
     <section className="section" id="portfolio">
       <div className="wrap">
         <Reveal className="section-head">
-          <span className="eyebrow center">On the Board</span>
-          <h2 className="display h-lg">Deals we closed<span className="dot">.</span></h2>
+          <span className="eyebrow center">{t.portfolio.eyebrow}</span>
+          <h2 className="display h-lg">{t.portfolio.title}<span className="dot">.</span></h2>
           <div className="rule" />
         </Reveal>
 
@@ -542,8 +451,8 @@ function Portfolio() {
 
         {status !== 'loading' && items.length === 0 && (
           <Reveal className="board-empty">
-            <p>The board is being updated. New closings post here as they clear.</p>
-            <a className="btn-line" href="/list">List a property with us <Arrow /></a>
+            <p>{t.portfolio.empty}</p>
+            <a className="btn-line" href="/list">{t.portfolio.emptyCta} <Arrow /></a>
           </Reveal>
         )}
 
@@ -577,8 +486,8 @@ function Portfolio() {
 
         {items.length > 0 && (
           <Reveal className="board-cta">
-            <p>Have a property that belongs here?</p>
-            <a className="btn btn-ghost" href="/list">List a Property <Arrow /></a>
+            <p>{t.portfolio.ctaLine}</p>
+            <a className="btn btn-ghost" href="/list">{t.portfolio.cta} <Arrow /></a>
           </Reveal>
         )}
       </div>
@@ -587,17 +496,19 @@ function Portfolio() {
 }
 
 function Process() {
+  const { t } = useLang()
+
   return (
     <section className="section light" id="process">
       <div className="wrap">
         <Reveal className="section-head">
-          <span className="eyebrow center">How We Work</span>
-          <h2 className="display h-lg">First call to forever<span className="dot">.</span></h2>
+          <span className="eyebrow center">{t.process.eyebrow}</span>
+          <h2 className="display h-lg">{t.process.title}<span className="dot">.</span></h2>
           <div className="rule" />
         </Reveal>
 
         <div className="process">
-          {PROCESS.map(([phase, title, copy], i) => (
+          {t.process.steps.map(([phase, title, copy], i) => (
             <Reveal className="step" key={phase} delay={i * 90} from="left">
               <div className="step-top">
                 <span className="step-dot" />
@@ -615,6 +526,7 @@ function Process() {
 }
 
 function Testimonials() {
+  const { t } = useLang()
   const [i, setI] = useState(0)
   const timer = useRef(null)
 
@@ -624,7 +536,7 @@ function Testimonials() {
   }, [])
 
   useEffect(() => {
-    timer.current = setInterval(() => setI((v) => (v + 1) % QUOTES.length), 7000)
+    timer.current = setInterval(() => setI((v) => (v + 1) % 3), 7000)
     return () => clearInterval(timer.current)
   }, [])
 
@@ -632,11 +544,11 @@ function Testimonials() {
     <section className="section">
       <div className="wrap">
         <Reveal className="section-head">
-          <span className="eyebrow center">In Their Words</span>
+          <span className="eyebrow center">{t.quotes.eyebrow}</span>
         </Reveal>
 
         <div className="quote-stage">
-          {QUOTES.map((q, n) => (
+          {t.quotes.items.map((q, n) => (
             <div className={`quote ${n === i ? 'on' : ''}`} key={q.name} aria-hidden={n !== i}>
               <div className="quote-avatar" aria-hidden="true">{q.name[0]}</div>
               <blockquote>{q.text}</blockquote>
@@ -649,12 +561,12 @@ function Testimonials() {
         </div>
 
         <div className="quote-nav">
-          {QUOTES.map((q, n) => (
+          {t.quotes.items.map((q, n) => (
             <button
               type="button"
               key={q.name}
               className={n === i ? 'on' : ''}
-              aria-label={`Testimonial ${n + 1} of ${QUOTES.length}`}
+              aria-label={t.quotes.nth(n + 1, t.quotes.items.length)}
               aria-current={n === i}
               onClick={() => go(n)}
             />
@@ -668,6 +580,7 @@ function Testimonials() {
 const EMPTY = { name: '', email: '', phone: '', interest: '', message: '' }
 
 function Contact() {
+  const { t } = useLang()
   const [form, setForm] = useState(EMPTY)
   const [sent, setSent] = useState(false)
 
@@ -685,65 +598,58 @@ function Contact() {
     <section className="cta" id="contact">
       <div className="wrap cta-grid">
         <Reveal>
-          <span className="eyebrow">Begin</span>
+          <span className="eyebrow">{t.contact.eyebrow}</span>
           <h2 className="display h-lg">
-            Tell us what you’re <span className="gold-text">building</span>.
+            {t.contact.titleA} <span className="gold-text">{t.contact.titleEm}</span>.
           </h2>
-          <p className="lede">
-            Every engagement starts with a real conversation. No pitch deck, no
-            obligation. We take a limited number of clients a year, so the answer is
-            sometimes no, and always straight.
-          </p>
+          <p className="lede">{t.contact.lede}</p>
         </Reveal>
 
         <Reveal delay={120}>
           {sent ? (
             <div className="form-sent" role="status">
-              <b>Received.</b>
-              <p>
-                Thank you. A partner will reach out within one business day to schedule
-                your consultation.
-              </p>
+              <b>{t.contact.sentTitle}</b>
+              <p>{t.contact.sentBody}</p>
             </div>
           ) : (
             <form className="form" onSubmit={submit}>
               <div className="field">
                 <input
-                  type="text" required placeholder="Full name" aria-label="Full name"
+                  type="text" required placeholder={t.contact.name} aria-label={t.contact.name}
                   value={form.name} onChange={set('name')}
                 />
               </div>
               <div className="field">
                 <input
-                  type="email" required placeholder="Email address" aria-label="Email address"
+                  type="email" required placeholder={t.contact.email} aria-label={t.contact.email}
                   value={form.email} onChange={set('email')}
                 />
               </div>
               <div className="field">
                 <input
-                  type="tel" placeholder="Phone (optional)" aria-label="Phone"
+                  type="tel" placeholder={t.contact.phone} aria-label={t.contact.phoneLabel}
                   value={form.phone} onChange={set('phone')}
                 />
               </div>
               <div className="field">
-                <select required aria-label="Area of interest" value={form.interest} onChange={set('interest')}>
-                  <option value="">What are you here for?</option>
-                  <option value="talent">Talent Management</option>
-                  <option value="realty">Real Estate Advisory</option>
-                  <option value="both">Both Divisions</option>
-                  <option value="other">Something Else</option>
+                <select required aria-label={t.contact.interest} value={form.interest} onChange={set('interest')}>
+                  <option value="">{t.contact.interestPlaceholder}</option>
+                  <option value="talent">{t.contact.options.talent}</option>
+                  <option value="realty">{t.contact.options.realty}</option>
+                  <option value="both">{t.contact.options.both}</option>
+                  <option value="other">{t.contact.options.other}</option>
                 </select>
               </div>
               <div className="field">
                 <textarea
-                  placeholder="Tell us about you and what you need" aria-label="Message"
+                  placeholder={t.contact.message} aria-label={t.contact.messageLabel}
                   value={form.message} onChange={set('message')}
                 />
               </div>
               <button type="submit" className="btn btn-gold">
-                Send It <Arrow />
+                {t.contact.send} <Arrow />
               </button>
-              <p className="form-note">Confidential. We never share your information.</p>
+              <p className="form-note">{t.contact.note}</p>
             </form>
           )}
         </Reveal>
@@ -753,6 +659,7 @@ function Contact() {
 }
 
 function Footer() {
+  const { t } = useLang()
   const [email, setEmail] = useState('')
   const [joined, setJoined] = useState(false)
 
@@ -767,10 +674,7 @@ function Footer() {
                 <small>Empowered LLC</small>
               </span>
             </a>
-            <p className="blurb">
-              Talent management and real estate advisory. We build careers,
-              portfolios, and legacies.
-            </p>
+            <p className="blurb">{t.footer.blurb}</p>
             <div className="socials">
               {SOCIALS.map(([label, href, d]) => (
                 <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}>
@@ -784,52 +688,53 @@ function Footer() {
           </div>
 
           <div>
-            <h6>Divisions</h6>
+            <h6>{t.footer.divisions}</h6>
             <ul>
-              <li><a href="#divisions">Talent Management</a></li>
-              <li><a href="#divisions">Real Estate Advisory</a></li>
-              <li><a href="#services">Brand Partnerships</a></li>
-              <li><a href="#services">Portfolio Strategy</a></li>
+              <li><a href="#divisions">{t.footer.links.talent}</a></li>
+              <li><a href="#divisions">{t.footer.links.realty}</a></li>
+              <li><a href="#services">{t.footer.links.partnerships}</a></li>
+              <li><a href="#services">{t.footer.links.portfolioStrategy}</a></li>
             </ul>
           </div>
 
           <div>
-            <h6>Company</h6>
+            <h6>{t.footer.company}</h6>
             <ul>
-              <li><a href="#roster">Roster</a></li>
-              <li><a href="#portfolio">Portfolio</a></li>
-              <li><a href="#process">Process</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="#roster">{t.footer.links.roster}</a></li>
+              <li><a href="#portfolio">{t.footer.links.portfolio}</a></li>
+              <li><a href="#process">{t.footer.links.process}</a></li>
+              <li><a href="#contact">{t.footer.links.contact}</a></li>
             </ul>
           </div>
 
           <div>
-            <h6>The Brief</h6>
-            <p className="blurb">
-              Quarterly notes on talent deals and property markets. No noise.
-            </p>
+            <h6>{t.footer.brief}</h6>
+            <p className="blurb">{t.footer.briefBlurb}</p>
             <form
               className="sub"
               onSubmit={(e) => { e.preventDefault(); setJoined(true); setEmail('') }}
             >
               <input
-                type="email" required placeholder="Your email" aria-label="Email for newsletter"
+                type="email" required placeholder={t.footer.emailPlaceholder} aria-label={t.footer.emailLabel}
                 value={email} onChange={(e) => setEmail(e.target.value)}
               />
-              <button type="submit">{joined ? 'Done' : 'Join'}</button>
+              <button type="submit">{joined ? t.footer.joined : t.footer.join}</button>
             </form>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <span>© {YEAR} Brioso Empowered LLC. All rights reserved.</span>
+          <span>© {YEAR} Brioso Empowered LLC. {t.footer.rights}</span>
           <span>
-            <a href="#top">Privacy</a> · <a href="#top">Terms</a> · <a href="#contact">hello@briosoempowered.com</a>
+            <a href="#top">{t.footer.privacy}</a> · <a href="#top">{t.footer.terms}</a> · <a href="#contact">hello@briosoempowered.com</a>
           </span>
         </div>
 
         <div className="credit">
-          <span>Created with <span className="heart" aria-hidden="true">❤</span><span className="sr-only">love</span> by</span>
+          <span>
+            {t.footer.createdBy} <span className="heart" aria-hidden="true">❤</span>
+            <span className="sr-only">{t.footer.love}</span> {t.footer.by}
+          </span>
           <a href="https://moguldesignagency.com/" target="_blank" rel="noreferrer">
             <img className="credit-mark" src={mogulLogo} alt="" width="15" height="22" loading="lazy" />
             Mogul Design Agency
@@ -843,6 +748,14 @@ function Footer() {
 /* ------------------------------------------------------------------ */
 
 export default function App({ page = 'home' }) {
+  return (
+    <LangProvider>
+      <Site page={page} />
+    </LangProvider>
+  )
+}
+
+function Site({ page }) {
   useReveal()
 
   if (page === 'submit') {
