@@ -1,0 +1,2 @@
+# Netlify: single-page app. Serve index.html for /manage and any other path.
+/*  /index.html  200

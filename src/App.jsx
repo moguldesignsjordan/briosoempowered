@@ -2,7 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import heroImg from './assets/hero.png'
 import mogulLogo from './assets/mogul.png'
 import baldoImg from './assets/baldo.jpg'
-import { sanity, sanityReady, imageUrl, PROPERTY_QUERY } from './lib/sanity'
+import { query, sanityReady, imageUrl, PROPERTY_QUERY } from './lib/sanity'
+import SubmitProperty from './SubmitProperty.jsx'
 
 /* ------------------------------------------------------------------
    data
@@ -13,6 +14,7 @@ const NAV = [
   ['Services', '#services'],
   ['Roster', '#roster'],
   ['Portfolio', '#portfolio'],
+  ['List a Property', '/list'],
   ['Process', '#process'],
   ['Contact', '#contact'],
 ]
@@ -258,7 +260,9 @@ const Arrow = () => (
    sections
    ------------------------------------------------------------------ */
 
-function Nav() {
+function Nav({ page = 'home' }) {
+  /* Off the home page the in-page anchors need to point back at it. */
+  const to = (href) => (href.startsWith('#') && page !== 'home' ? `/${href}` : href)
   const [stuck, setStuck] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -284,7 +288,7 @@ function Nav() {
     <>
       <header className={`nav ${stuck ? 'stuck' : ''}`}>
         <div className="nav-inner wrap">
-          <a className="logo" href="#top" aria-label="Brioso Empowered, home">
+          <a className="logo" href={to('#top')} aria-label="Brioso Empowered, home">
             <span className="logo-word">
               <b>BRIOSO</b>
               <small>Empowered LLC</small>
@@ -293,11 +297,11 @@ function Nav() {
 
           <nav className="nav-links" aria-label="Primary">
             {NAV.map(([label, href]) => (
-              <a key={href} href={href}>{label}</a>
+              <a key={href} href={to(href)}>{label}</a>
             ))}
           </nav>
 
-          <a className="btn btn-gold" href="#contact">
+          <a className="btn btn-gold" href={to('#contact')}>
             Book a Consult <Arrow />
           </a>
 
@@ -315,7 +319,7 @@ function Nav() {
 
       <div className={`drawer ${open ? 'open' : ''}`} aria-hidden={!open}>
         {NAV.map(([label, href]) => (
-          <a key={href} href={href} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)}>
+          <a key={href} href={to(href)} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)}>
             {label}
           </a>
         ))}
@@ -506,8 +510,7 @@ function useProperties() {
   useEffect(() => {
     if (!sanityReady) return
     let live = true
-    sanity
-      .fetch(PROPERTY_QUERY)
+    query(PROPERTY_QUERY)
       .then((items) => live && setState({ status: 'ready', items: items || [] }))
       .catch((err) => {
         console.error('Could not load properties', err)
@@ -540,11 +543,11 @@ function Portfolio() {
         {status !== 'loading' && items.length === 0 && (
           <Reveal className="board-empty">
             <p>The board is being updated. New closings post here as they clear.</p>
-            <a className="btn-line" href="#contact">Ask what we are working on <Arrow /></a>
+            <a className="btn-line" href="/list">List a property with us <Arrow /></a>
           </Reveal>
         )}
 
-        {items.length > 0 && (
+        {status !== 'loading' && items.length > 0 && (
           <div className="portfolio">
             {items.map((p, i) => {
               const src = imageUrl(p.photo, 1200)
@@ -570,6 +573,13 @@ function Portfolio() {
               )
             })}
           </div>
+        )}
+
+        {items.length > 0 && (
+          <Reveal className="board-cta">
+            <p>Have a property that belongs here?</p>
+            <a className="btn btn-ghost" href="/list">List a Property <Arrow /></a>
+          </Reveal>
         )}
       </div>
     </section>
@@ -832,8 +842,21 @@ function Footer() {
 
 /* ------------------------------------------------------------------ */
 
-export default function App() {
+export default function App({ page = 'home' }) {
   useReveal()
+
+  if (page === 'submit') {
+    return (
+      <>
+        <ScrollProgress />
+        <Nav page="submit" />
+        <main>
+          <SubmitProperty />
+        </main>
+        <Footer />
+      </>
+    )
+  }
 
   return (
     <>

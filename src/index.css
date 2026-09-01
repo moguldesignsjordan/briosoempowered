@@ -1122,3 +1122,108 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   font-size: .92rem; max-width: 34ch; margin-inline: auto;
 }
 @media (min-width: 700px) { .board-empty { padding: 3.4rem 2rem; } }
+
+/* Shown while the /manage chunk downloads. */
+.boot {
+  min-height: 100dvh; display: grid; place-items: center;
+  background: var(--ink); color: var(--muted);
+  font-size: .78rem; letter-spacing: .18em; text-transform: uppercase;
+}
+
+/* ============================================================
+   SUBMIT A PROPERTY — public, client-facing form
+   ============================================================ */
+
+.wrap.narrow { max-width: 720px; }
+.lede.center { text-align: center; margin-inline: auto; }
+
+.form-wide { gap: 0; padding: 0; background: none; border: none; }
+.form-wide fieldset {
+  border: var(--bd) solid var(--line-soft); border-radius: var(--r);
+  background: var(--ink-2); padding: 1.2rem; margin: 0 0 1rem;
+  display: grid; gap: .9rem;
+}
+.form-wide fieldset:disabled { opacity: .55; }
+@media (min-width: 700px) { .form-wide fieldset { padding: 1.7rem; gap: 1rem; } }
+
+.field-group {
+  font-family: var(--display); text-transform: uppercase;
+  font-size: .78rem; letter-spacing: .16em; color: var(--gold);
+  padding: 0 .5rem; margin-left: -.5rem;
+}
+
+.field label {
+  display: block; margin-bottom: .45rem;
+  font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: rgba(244, 244, 240, .72);
+}
+.field .opt {
+  font-weight: 500; letter-spacing: .08em; text-transform: none;
+  color: rgba(244, 244, 240, .38);
+}
+
+/* photo upload */
+.upload-drop {
+  display: grid; place-items: center; gap: .3rem; cursor: pointer;
+  padding: 1.6rem 1rem; text-align: center;
+  border: var(--bd) dashed var(--line); border-radius: var(--r-sm);
+  background: var(--ink);
+  transition: border-color var(--fast), background var(--fast);
+}
+.upload-drop b { font-size: .84rem; text-transform: none; letter-spacing: 0; }
+.upload-drop small { font-size: .68rem; color: rgba(244, 244, 240, .4); }
+.upload-plus {
+  font-family: var(--display); font-size: 1.6rem; line-height: 1;
+  color: var(--gold);
+}
+@media (hover: hover) and (pointer: fine) {
+  .upload-drop:hover { border-color: var(--gold); background: var(--ink-3); }
+}
+.upload-drop:active { transform: scale(.99); }
+.upload input:focus-visible + .upload-drop { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+.upload-preview {
+  display: flex; align-items: center; gap: .9rem;
+  padding: .7rem; border-radius: var(--r-sm);
+  border: var(--bd) solid var(--line-soft); background: var(--ink);
+}
+.upload-preview img {
+  width: 84px; height: 64px; object-fit: cover; border-radius: 8px; flex: none;
+}
+.upload-preview b {
+  display: block; font-size: .78rem; font-weight: 600;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  max-width: 46vw; margin-bottom: .3rem;
+}
+
+/* highlight rows */
+.meta-rows { display: grid; gap: .5rem; }
+.meta-row { display: grid; grid-template-columns: 1fr; gap: .5rem; }
+@media (min-width: 520px) { .meta-row { grid-template-columns: 1fr 1.2fr; } }
+.meta-row input {
+  width: 100%; padding: .8rem .9rem; min-height: var(--tap);
+  background: var(--ink); color: var(--text);
+  border: var(--bd) solid var(--line-soft); border-radius: var(--r-sm);
+  font-family: var(--sans); font-size: 16px; outline: none;
+  transition: border-color var(--fast), background var(--fast);
+}
+@media (min-width: 700px) { .meta-row input { font-size: .89rem; } }
+.meta-row input:focus { border-color: var(--gold); background: var(--ink-3); }
+.meta-row input::placeholder { color: rgba(244, 244, 240, .34); }
+
+.form-error {
+  margin: 0 0 .8rem; padding: .8rem 1rem;
+  border: var(--bd) solid rgba(255, 116, 116, .5); border-radius: var(--r-sm);
+  background: rgba(255, 116, 116, .1);
+  color: #ffb4b4; font-size: .82rem;
+}
+.form-wide .btn { width: 100%; }
+.form-wide .btn[disabled] { opacity: .6; pointer-events: none; }
+.form-sent .btn { margin-top: 1.2rem; }
+
+.board-cta {
+  margin-top: 2rem; display: grid; gap: .9rem; justify-items: center;
+  text-align: center;
+}
+.board-cta p { color: var(--muted); font-size: .9rem; margin: 0; }
+@media (min-width: 700px) { .board-cta { margin-top: 2.6rem; } }
