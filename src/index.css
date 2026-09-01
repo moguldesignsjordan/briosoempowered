@@ -1,6 +1,6 @@
 /* ============================================================
    BRIOSO EMPOWERED. Design System
-   ACID COURT. Concrete + champagne gold. Streetwear energy.
+   ACID COURT. Concrete + light champagne gold. Streetwear energy.
 
    MOBILE FIRST. Base styles target the smallest screen;
    layout scales UP through min-width breakpoints only.
@@ -17,12 +17,12 @@
   --ink-3:      #191a1d;
   --char:       #232428;
 
-  --gold:       #c9a227;
-  --gold-dp:    #8c6d14;
-  --gold-lt:    #e8cf7a;
+  --gold:       #e0c064;
+  --gold-dp:    #a8862a;
+  --gold-lt:    #f2e0a6;
   --champagne:  #f3e6c4;
-  --uv:         #6b5bff;
-  --uv-lt:      #9a8dff;
+  --amber:      #d8a648;
+  --amber-lt:   #eccb84;
 
   --bone:       #f4f4f0;
   --bone-2:     #e2e2da;
@@ -31,7 +31,7 @@
   --muted:      rgba(244, 244, 240, 0.58);
   --muted-dk:   rgba(17, 17, 17, 0.62);
 
-  --line:       rgba(201, 162, 39, 0.28);
+  --line:       rgba(224,192,100, 0.28);
   --line-soft:  rgba(244, 244, 240, 0.11);
 
   /* type */
@@ -55,7 +55,7 @@
   --pop:   cubic-bezier(0.34, 1.56, 0.64, 1);
   --fast:  220ms;
 
-  --gold-grad: linear-gradient(96deg, #8c6d14, #c9a227 45%, #f3e6c4 70%, #c9a227);
+  --gold-grad: linear-gradient(96deg, #a8862a, #e0c064 45%, #f7edd2 72%, #e0c064);
 }
 
 @media (min-width: 700px) {
@@ -77,7 +77,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;                  /* rotated marquee must not scroll the page */
-  -webkit-tap-highlight-color: rgba(201, 162, 39, 0.18);
+  -webkit-tap-highlight-color: rgba(224,192,100, 0.18);
 }
 
 /* long words / URLs must never widen a phone viewport */
@@ -377,8 +377,8 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 .hero-bg .city {
   position: absolute; inset: 0;
   background:
-    radial-gradient(90% 70% at 82% 30%, rgba(201, 162, 39, .18), transparent 60%),
-    radial-gradient(70% 60% at 15% 85%, rgba(107, 91, 255, .26), transparent 65%),
+    radial-gradient(90% 70% at 82% 30%, rgba(224,192,100, .18), transparent 60%),
+    radial-gradient(70% 60% at 15% 85%, rgba(216,166,72, .26), transparent 65%),
     linear-gradient(180deg, #0b0b0c 0%, #121215 50%, #0b0b0c 100%);
 }
 .hero-bg .city::after {
@@ -549,15 +549,15 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 
 .art-talent {
   background:
-    radial-gradient(65% 55% at 28% 22%, rgba(201,162,39,.34), transparent 66%),
-    radial-gradient(55% 50% at 80% 72%, rgba(107,91,255,.4), transparent 70%),
+    radial-gradient(65% 55% at 28% 22%, rgba(224,192,100,.34), transparent 66%),
+    radial-gradient(55% 50% at 80% 72%, rgba(216,166,72,.4), transparent 70%),
     linear-gradient(160deg, #1a1d10, #0b0b0c);
 }
 .art-realty {
   background:
-    radial-gradient(65% 55% at 74% 26%, rgba(107,91,255,.42), transparent 66%),
-    radial-gradient(60% 55% at 20% 78%, rgba(201,162,39,.3), transparent 70%),
-    linear-gradient(200deg, #12131c, #0b0b0c);
+    radial-gradient(65% 55% at 74% 26%, rgba(216,166,72,.42), transparent 66%),
+    radial-gradient(60% 55% at 20% 78%, rgba(224,192,100,.3), transparent 70%),
+    linear-gradient(200deg, #191710, #0b0b0c);
 }
 
 /* ============================================================
@@ -604,7 +604,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
     background: var(--ink-3); border-color: var(--gold);
     transform: translate(-4px, -4px); box-shadow: 6px 6px 0 0 var(--gold);
   }
-  .service:hover .idx { color: rgba(201,162,39,.22); }
+  .service:hover .idx { color: rgba(224,192,100,.22); }
   .service:hover .service-icon { transform: translateY(-3px) rotate(-8deg) scale(1.08); }
 }
 
@@ -631,7 +631,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 @media (min-width: 700px) { .stat span { font-size: .64rem; letter-spacing: .18em; margin-top: .7rem; } }
 @media (hover: hover) and (pointer: fine) {
-  .stat:hover b { transform: translateY(-5px) rotate(-2deg); color: var(--uv); }
+  .stat:hover b { transform: translateY(-5px) rotate(-2deg); color: var(--amber); }
 }
 
 /* ============================================================
@@ -748,9 +748,9 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   color: var(--gold); letter-spacing: -0.01em;
 }
 
-.art-a { background: radial-gradient(60% 60% at 68% 22%, rgba(201,162,39,.42), transparent 70%), linear-gradient(160deg, #1b1d12, #0b0b0c); }
-.art-b { background: radial-gradient(70% 70% at 28% 20%, rgba(107,91,255,.5), transparent 72%), linear-gradient(180deg, #13141f, #0b0b0c); }
-.art-c { background: radial-gradient(70% 70% at 58% 28%, rgba(201,162,39,.34), transparent 70%), radial-gradient(50% 50% at 20% 80%, rgba(107,91,255,.34), transparent 70%), linear-gradient(200deg, #191a14, #0b0b0c); }
+.art-a { background: radial-gradient(60% 60% at 68% 22%, rgba(224,192,100,.42), transparent 70%), linear-gradient(160deg, #1b1d12, #0b0b0c); }
+.art-b { background: radial-gradient(70% 70% at 28% 20%, rgba(216,166,72,.5), transparent 72%), linear-gradient(180deg, #1a1712, #0b0b0c); }
+.art-c { background: radial-gradient(70% 70% at 58% 28%, rgba(224,192,100,.34), transparent 70%), radial-gradient(50% 50% at 20% 80%, rgba(216,166,72,.34), transparent 70%), linear-gradient(200deg, #191a14, #0b0b0c); }
 .art-d { background: radial-gradient(70% 70% at 38% 70%, rgba(154,141,255,.42), transparent 70%), linear-gradient(160deg, #16141f, #0b0b0c); }
 
 /* ============================================================
@@ -774,8 +774,8 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 .step-top { display: flex; align-items: center; gap: .8rem; margin-bottom: 1.1rem; }
 .step-dot {
-  width: 14px; height: 14px; border-radius: 50%; background: var(--uv);
-  box-shadow: 0 0 0 5px rgba(107,91,255,.18); flex: none;
+  width: 14px; height: 14px; border-radius: 50%; background: var(--amber);
+  box-shadow: 0 0 0 5px rgba(216,166,72,.18); flex: none;
 }
 .step-line { height: 3px; flex: 1; background: rgba(17,17,17,.14); border-radius: 2px; }
 .step b {
@@ -786,7 +786,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 .step p { font-size: .87rem; color: var(--muted-dk); }
 .step em {
   font-style: normal; font-size: .58rem; font-weight: 700;
-  letter-spacing: .16em; text-transform: uppercase; color: var(--uv);
+  letter-spacing: .16em; text-transform: uppercase; color: var(--amber);
   display: block; margin-bottom: .45rem;
 }
 
@@ -829,7 +829,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 .quote-avatar {
   width: 54px; height: 54px; border-radius: 16px; margin: 0 auto 1.2rem;
-  background: var(--uv); display: grid; place-items: center;
+  background: var(--amber); display: grid; place-items: center;
   font-family: var(--display); font-size: 1.4rem; color: #fff;
   transform: rotate(-5deg);
 }
@@ -862,8 +862,8 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   position: relative; overflow: hidden;
   padding: var(--sec-y) 0;
   background:
-    radial-gradient(90% 130% at 18% 0%, rgba(201,162,39,.14), transparent 62%),
-    radial-gradient(80% 120% at 92% 100%, rgba(107,91,255,.34), transparent 62%),
+    radial-gradient(90% 130% at 18% 0%, rgba(224,192,100,.14), transparent 62%),
+    radial-gradient(80% 120% at 92% 100%, rgba(216,166,72,.34), transparent 62%),
     linear-gradient(150deg, #101112, #0b0b0c);
   border-block: var(--bd) solid var(--line-soft);
 }
@@ -905,7 +905,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 .form-sent {
   border: var(--bd) solid var(--gold); border-radius: var(--r);
   padding: 2rem 1.4rem; text-align: center;
-  background: rgba(201,162,39,.07);
+  background: rgba(224,192,100,.07);
 }
 @media (min-width: 700px) { .form-sent { padding: 2.4rem 1.8rem; } }
 .form-sent b {
