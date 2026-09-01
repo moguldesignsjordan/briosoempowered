@@ -15,7 +15,6 @@ const NAV = [
   ['services', '#services'],
   ['roster', '#roster'],
   ['portfolio', '#portfolio'],
-  ['list', '/list'],
   ['process', '#process'],
   ['contact', '#contact'],
 ]
