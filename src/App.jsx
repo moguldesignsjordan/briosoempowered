@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import heroImg from './assets/hero.png'
+import mogulLogo from './assets/mogul.png'
 import baldoImg from './assets/baldo.jpg'
 
 /* ------------------------------------------------------------------
@@ -29,32 +30,32 @@ const MARQUEE = [
 const SERVICES = [
   {
     title: 'Career Architecture',
-    copy: 'Positioning, deal flow, and long-horizon planning for artists, athletes, and founders who intend to still be relevant in a decade.',
+    copy: 'Positioning, deal flow, and long-horizon planning for creators, artists, and founders who intend to still be relevant in a decade.',
     icon: 'compass',
   },
   {
-    title: 'Brand Partnerships',
-    copy: 'We negotiate endorsements and equity deals that read as choices, not paychecks. Every partner earns their place on the résumé.',
-    icon: 'handshake',
-  },
-  {
-    title: 'Publicity & Press',
-    copy: 'Narrative control across editorial, broadcast, and social. Fewer, better placements that compound instead of evaporate.',
+    title: 'Partnerships & Press',
+    copy: 'Endorsements and equity deals that read as choices, not paychecks — plus narrative control across editorial, broadcast, and social.',
     icon: 'mic',
   },
   {
-    title: 'Acquisitions',
-    copy: 'Off-market sourcing across primary and second-home markets, with diligence handled end to end before you ever see the file.',
+    title: 'Business Build-Out',
+    copy: 'From idea to entity. Strategy, pricing, and positioning, then the LLC, EIN, operating agreement, and banking filed clean the first time.',
+    icon: 'growth',
+  },
+  {
+    title: 'Credit & Capital',
+    copy: 'Repair the profile, restructure the debt, and learn the levers. Credit is the cheapest capital you will ever raise — we teach you to use it.',
+    icon: 'card',
+  },
+  {
+    title: 'Real Estate & Portfolio',
+    copy: 'Off-market sourcing, cash-flowing acquisitions, and hold-refinance-exit modeling run against your tax posture and the next ten years.',
     icon: 'key',
   },
   {
-    title: 'Portfolio Strategy',
-    copy: 'Hold, refinance, or exit, modeled against your tax posture, liquidity needs, and the next ten years of your career arc.',
-    icon: 'chart',
-  },
-  {
-    title: 'Legacy & Structure',
-    copy: 'Entities, trusts, and succession built alongside your counsel so the work outlives the run that paid for it.',
+    title: 'Ownership & Legacy',
+    copy: 'Proven turnkey ventures built end to end, structured into trusts and succession — with the mentorship that keeps the operator sharp.',
     icon: 'shield',
   },
 ]
@@ -156,6 +157,12 @@ const PATHS = {
   key: 'M15 3a6 6 0 1 1-5.6 8.2L3 17.6V21h3.4l1.4-1.4v-2h2v-2h2l1-1A6 6 0 0 1 15 3Zm1.5 3.5h.01',
   chart: 'M4 20V10m5 10V4m5 16v-7m5 7V8',
   shield: 'M12 2l8 3.5v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6L12 2Zm0 6v8',
+  growth: 'M3 20h18M6 20V9m0 0 5 4 4-6 4 3M15 4h5v5',
+  doc: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7M14 3l5 5M14 3v5h5M8 12h5M8 16h3m9-4-4.5 4.5L15 20l3.5-.5L23 15l-3-3Z',
+  card: 'M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Zm0 3h18M6 15h4',
+  building: 'M4 21V6a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v15M14 11h5a1 1 0 0 1 1 1v9M4 21h17M7 8h1m3 0h1M7 12h1m3 0h1M7 16h1m3 0h1m5 0h1',
+  moto: 'M5.5 18a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm13 0a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-13-3.5h6l4-5h3M13 6h3l1.5 5.5M9 9.5h4',
+  mentor: 'M12 14a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-6.5 7a6.5 6.5 0 0 1 13 0M12 2v3M5.6 5.6l2.1 2.1m10.7-2.1-2.1 2.1M2.5 11h3m13 0h3',
 }
 
 function Icon({ name, className = 'service-icon' }) {
@@ -315,9 +322,9 @@ function Hero() {
         </Reveal>
 
         <Reveal as="p" className="lede" delay={180}>
-          We rep artists, athletes, and founders, plus the property that turns a hot
-          run into permanent money. One desk. Two disciplines. Zero conflicting
-          interests.
+          We rep creators, artists, and founders — and the realtors and properties
+          that turn a hot run into permanent money. One desk. Two disciplines.
+          Zero conflicting interests.
         </Reveal>
 
         <Reveal className="hero-actions" delay={260}>
@@ -737,6 +744,16 @@ function Footer() {
           <span>
             <a href="#top">Privacy</a> · <a href="#top">Terms</a> · <a href="#contact">hello@briosoempowered.com</a>
           </span>
+        </div>
+
+        <div className="credit">
+          <span>Created with <span className="heart" aria-hidden="true">❤</span><span className="sr-only">love</span> by</span>
+          <a href="https://moguldesignagency.com/" target="_blank" rel="noreferrer">
+            <span className="credit-chip" aria-hidden="true">
+              <img className="credit-mark" src={mogulLogo} alt="" width="13" height="19" loading="lazy" />
+            </span>
+            Mogul Design Agency
+          </a>
         </div>
       </div>
     </footer>

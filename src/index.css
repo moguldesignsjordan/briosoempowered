@@ -990,3 +990,34 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   .footer-bottom { flex-direction: row; flex-wrap: wrap; gap: 1rem; margin-top: 3.4rem; padding: 1.5rem 0; text-align: left; font-size: .74rem; }
 }
 @media (hover: hover) and (pointer: fine) { .footer-bottom a:hover { color: var(--gold); } }
+
+/* --- agency credit ------------------------------------------------ */
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.credit {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: .5rem; padding: 0 0 1.4rem;
+  font-size: .7rem; letter-spacing: .04em; color: rgba(244,244,240,.34);
+}
+.credit .heart { color: var(--gold); font-size: .78rem; }
+.credit a {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(244,244,240,.62);
+  transition: color var(--fast) var(--ease);
+}
+.credit-chip {
+  display: grid; place-items: center; width: 30px; height: 30px; flex: none;
+  border-radius: 9px; background: var(--bone);
+  transition: transform 260ms var(--pop), box-shadow var(--fast) var(--ease);
+}
+.credit-mark { width: auto; height: 19px; display: block; }
+@media (hover: hover) and (pointer: fine) {
+  .credit a:hover { color: var(--gold); }
+  .credit a:hover .credit-chip { transform: rotate(-6deg) scale(1.08); box-shadow: 0 0 18px rgba(232, 62, 140, .35); }
+}
+@media (min-width: 700px) { .credit { justify-content: flex-start; padding-bottom: 1.6rem; } }
