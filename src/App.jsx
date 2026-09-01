@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import heroImg from './assets/hero.png'
 import mogulLogo from './assets/mogul.png'
 import baldoImg from './assets/baldo.jpg'
+import { sanity, sanityReady, imageUrl, PROPERTY_QUERY } from './lib/sanity'
 
 /* ------------------------------------------------------------------
    data
@@ -80,44 +81,6 @@ const FEATURED = {
     ['Silver', 'YouTube Award'],
   ],
 }
-
-const PROPS = [
-  {
-    tag: 'Acquisition',
-    name: 'The Ellsworth Residences',
-    art: 'art-b',
-    size: 'wide',
-    meta: [['Value', '$14.2M'], ['Market', 'Miami, FL'], ['Hold', '7 Years']],
-  },
-  {
-    tag: 'Disposition',
-    name: 'Crescent Hill Estate',
-    art: 'art-c',
-    size: 'tall',
-    meta: [['Value', '$8.6M'], ['Market', 'Austin, TX'], ['Over Ask', '11%']],
-  },
-  {
-    tag: 'Development',
-    name: 'Nineteen Vestry Row',
-    art: 'art-a',
-    size: '',
-    meta: [['Value', '$22M'], ['Units', '24']],
-  },
-  {
-    tag: 'Advisory',
-    name: 'Palmetto Portfolio',
-    art: 'art-d',
-    size: '',
-    meta: [['Value', '$31M'], ['Assets', '9']],
-  },
-  {
-    tag: 'Acquisition',
-    name: 'Harbor & Ninth',
-    art: 'art-b',
-    size: '',
-    meta: [['Value', '$6.4M'], ['Market', 'Charleston, SC']],
-  },
-]
 
 const PROCESS = [
   ['Phase 01', 'Discovery', 'A closed-door assessment of where you actually stand: income, exposure, leverage, and the reputation you have not yet monetized.'],
@@ -535,7 +498,30 @@ function Roster() {
   )
 }
 
+/* Properties live in Sanity. Until the project id is set the board simply
+   reports that it is empty rather than shipping placeholder listings. */
+function useProperties() {
+  const [state, setState] = useState({ status: sanityReady ? 'loading' : 'off', items: [] })
+
+  useEffect(() => {
+    if (!sanityReady) return
+    let live = true
+    sanity
+      .fetch(PROPERTY_QUERY)
+      .then((items) => live && setState({ status: 'ready', items: items || [] }))
+      .catch((err) => {
+        console.error('Could not load properties', err)
+        if (live) setState({ status: 'error', items: [] })
+      })
+    return () => { live = false }
+  }, [])
+
+  return state
+}
+
 function Portfolio() {
+  const { status, items } = useProperties()
+
   return (
     <section className="section" id="portfolio">
       <div className="wrap">
@@ -545,23 +531,46 @@ function Portfolio() {
           <div className="rule" />
         </Reveal>
 
-        <div className="portfolio">
-          {PROPS.map((p, i) => (
-            <Reveal as="article" className={`prop ${p.size}`} key={p.name} delay={i * 80} from="zoom">
-              <div className={`prop-art ${p.art}`} />
-              <span className="prop-tag">{p.tag}</span>
-              <h4>{p.name}</h4>
-              <div className="meta">
-                {p.meta.map(([k, v]) => (
-                  <div key={k}>
-                    <span>{k}</span>
-                    <b>{v}</b>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        {status === 'loading' && (
+          <div className="portfolio" aria-hidden="true">
+            {[0, 1, 2].map((i) => <div className="prop skeleton" key={i} />)}
+          </div>
+        )}
+
+        {status !== 'loading' && items.length === 0 && (
+          <Reveal className="board-empty">
+            <p>The board is being updated. New closings post here as they clear.</p>
+            <a className="btn-line" href="#contact">Ask what we are working on <Arrow /></a>
+          </Reveal>
+        )}
+
+        {items.length > 0 && (
+          <div className="portfolio">
+            {items.map((p, i) => {
+              const src = imageUrl(p.photo, 1200)
+              return (
+                <Reveal as="article" className={`prop ${p.size || ''}`} key={p._id} delay={i * 80} from="zoom">
+                  <div
+                    className={`prop-art ${src ? '' : 'art-fallback'}`}
+                    style={src ? { backgroundImage: `url(${src})` } : undefined}
+                  />
+                  {p.tag && <span className="prop-tag">{p.tag}</span>}
+                  <h4>{p.name}</h4>
+                  {p.meta?.length > 0 && (
+                    <div className="meta">
+                      {p.meta.map((m) => (
+                        <div key={m.label}>
+                          <span>{m.label}</span>
+                          <b>{m.value}</b>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </Reveal>
+              )
+            })}
+          </div>
+        )}
       </div>
     </section>
   )

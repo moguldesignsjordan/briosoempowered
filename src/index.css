@@ -716,7 +716,16 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   .prop.wide, .prop.tall { grid-column: span 3; min-height: 420px; }
 }
 
-.prop-art { position: absolute; inset: 0; z-index: -2; transition: transform 600ms var(--ease); }
+.prop-art {
+  position: absolute; inset: 0; z-index: -2;
+  background-size: cover; background-position: center;
+  transition: transform 600ms var(--ease);
+}
+.art-fallback {
+  background:
+    radial-gradient(70% 70% at 30% 22%, rgba(224,192,100,.4), transparent 72%),
+    linear-gradient(170deg, #1b1912, #0b0b0c);
+}
 .prop::after {
   content: ''; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(190deg, rgba(11,11,12,.2), rgba(11,11,12,.9));
@@ -757,7 +766,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 .art-a { background: radial-gradient(60% 60% at 68% 22%, rgba(224,192,100,.42), transparent 70%), linear-gradient(160deg, #1b1d12, #0b0b0c); }
 .art-b { background: radial-gradient(70% 70% at 28% 20%, rgba(216,166,72,.5), transparent 72%), linear-gradient(180deg, #1a1712, #0b0b0c); }
 .art-c { background: radial-gradient(70% 70% at 58% 28%, rgba(224,192,100,.34), transparent 70%), radial-gradient(50% 50% at 20% 80%, rgba(216,166,72,.34), transparent 70%), linear-gradient(200deg, #191a14, #0b0b0c); }
-.art-d { background: radial-gradient(70% 70% at 38% 70%, rgba(154,141,255,.42), transparent 70%), linear-gradient(160deg, #16141f, #0b0b0c); }
+.art-d { background: radial-gradient(70% 70% at 38% 70%, rgba(242,224,166,.34), transparent 70%), linear-gradient(160deg, #1c1a12, #0b0b0c); }
 
 /* ============================================================
    PROCESS   1 → 2 → 4
@@ -1089,3 +1098,27 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
     @keyframes tilt { from { clip-path: inset(0 0 32% 0); } to { clip-path: inset(0 0 0 0); } }
   }
 }
+
+/* --- portfolio: loading + empty states ---------------------------- */
+
+.prop.skeleton {
+  border-color: var(--line-soft);
+  background: linear-gradient(100deg, var(--ink-2) 30%, var(--ink-3) 50%, var(--ink-2) 70%);
+  background-size: 300% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+@keyframes shimmer { to { background-position: -150% 0; } }
+@media (prefers-reduced-motion: reduce) { .prop.skeleton { animation: none; } }
+
+.board-empty {
+  border: var(--bd) dashed var(--line);
+  border-radius: var(--r);
+  padding: 2.6rem 1.4rem;
+  text-align: center;
+  background: var(--ink-2);
+}
+.board-empty p {
+  margin: 0 0 1.1rem; color: var(--muted);
+  font-size: .92rem; max-width: 34ch; margin-inline: auto;
+}
+@media (min-width: 700px) { .board-empty { padding: 3.4rem 2rem; } }
