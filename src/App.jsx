@@ -35,7 +35,7 @@ const SERVICES = [
   },
   {
     title: 'Partnerships & Press',
-    copy: 'Endorsements and equity deals that read as choices, not paychecks — plus narrative control across editorial, broadcast, and social.',
+    copy: 'Endorsements and equity deals that read as choices, not paychecks, plus narrative control across editorial, broadcast, and social.',
     icon: 'mic',
   },
   {
@@ -45,7 +45,7 @@ const SERVICES = [
   },
   {
     title: 'Credit & Capital',
-    copy: 'Repair the profile, restructure the debt, and learn the levers. Credit is the cheapest capital you will ever raise — we teach you to use it.',
+    copy: 'Repair the profile, restructure the debt, and learn the levers. Credit is the cheapest capital you will ever raise, so we teach you to use it.',
     icon: 'card',
   },
   {
@@ -55,7 +55,7 @@ const SERVICES = [
   },
   {
     title: 'Ownership & Legacy',
-    copy: 'Proven turnkey ventures built end to end, structured into trusts and succession — with the mentorship that keeps the operator sharp.',
+    copy: 'Proven turnkey ventures built end to end, structured into trusts and succession, with the mentorship that keeps the operator sharp.',
     icon: 'shield',
   },
 ]
