@@ -46,6 +46,14 @@ first, then uploaded server-side.
 there with the submitter's name, email, phone, and notes attached as read-only
 fields. Hit Publish and it goes on the board.
 
+## The Contact form
+
+The homepage's general-inquiry form (`Contact` in `src/App.jsx`) posts to
+`api/submit-contact.js`, the same pattern as property submissions: it files a
+draft `inquiry` document in Sanity — visible at `/manage` — using the same
+`SANITY_WRITE_TOKEN`. No separate setup needed; it shares the property form's
+environment variables.
+
 The write token lives only in the host's environment (`SANITY_WRITE_TOKEN`),
 never in the browser bundle and never in this repo. That is the whole reason
 submissions go through a serverless function instead of straight from the page.
@@ -135,9 +143,6 @@ on mobile to stop iOS Safari zooming on focus.
 
 ## Known gaps
 
-- **The contact form has no backend.** `Contact` in `src/App.jsx` logs the
-  payload to the console and shows a success state. Wire it to a form endpoint
-  or API route before launch.
 - **Roster and testimonial content is placeholder copy.** Swap in real
   clients and quotes. Properties are live from Sanity.
 - Footer newsletter signup is also front-end only.

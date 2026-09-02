@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-01T23:39:55Z",
+  "title": "Design System: Brioso Empowered",
+  "extensions": {
+    "colorMeta": {
+      "gold": { "role": "primary", "displayName": "Champagne Gold", "canonical": "#e0c064", "tonalRamp": ["#3a2f10", "#5c4a17", "#7e661f", "#a8862a", "#c4a248", "#e0c064", "#eed896", "#f7edd2"] },
+      "gold-dp": { "role": "primary", "displayName": "Champagne Gold — Deep", "canonical": "#a8862a", "tonalRamp": ["#221a09", "#3f3110", "#5c4818", "#7c611f", "#a8862a", "#c6a34d", "#dcc27f", "#f0e2bd"] },
+      "gold-lt": { "role": "primary", "displayName": "Champagne Gold — Light", "canonical": "#f2e0a6", "tonalRamp": ["#4a3e12", "#6e5c1c", "#93801f", "#b9a53a", "#d4c268", "#e6d78e", "#f2e0a6", "#faf3d9"] },
+      "champagne": { "role": "primary", "displayName": "Champagne", "canonical": "#f3e6c4", "tonalRamp": ["#4d4118", "#6f5f22", "#948130", "#baa451", "#d6c485", "#e9dcac", "#f3e6c4", "#faf5e6"] },
+      "amber": { "role": "secondary", "displayName": "Warm Amber", "canonical": "#d8a648", "tonalRamp": ["#2e2109", "#4f3a10", "#725318", "#986e22", "#c08c33", "#d8a648", "#e6c179", "#f2ddb3"] },
+      "amber-lt": { "role": "secondary", "displayName": "Warm Amber — Light", "canonical": "#eccb84", "tonalRamp": ["#4b3813", "#6c521c", "#8f6e26", "#b48c37", "#d0aa53", "#e2bd72", "#eccb84", "#f7e6c2"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#0b0b0c", "tonalRamp": ["#000000", "#0b0b0c", "#161618", "#232428", "#3a3b40", "#57585f", "#7a7c85", "#a3a5ad"] },
+      "ink-2": { "role": "neutral", "displayName": "Ink — Surface", "canonical": "#121214", "tonalRamp": ["#000000", "#121214", "#1c1c1f", "#292a2e", "#3f4045", "#5c5d63", "#7f8087", "#a7a8ae"] },
+      "ink-3": { "role": "neutral", "displayName": "Ink — Raised", "canonical": "#191a1d", "tonalRamp": ["#000000", "#191a1d", "#232428", "#303136", "#48494f", "#65666d", "#888a91", "#b0b1b7"] },
+      "char": { "role": "neutral", "displayName": "Char", "canonical": "#232428", "tonalRamp": ["#000000", "#141416", "#232428", "#333438", "#4b4c51", "#68696f", "#8c8d93", "#b4b5ba"] },
+      "bone": { "role": "neutral", "displayName": "Bone", "canonical": "#f4f4f0", "tonalRamp": ["#3a3a37", "#57574f", "#77776c", "#9a9a8e", "#bebebd", "#dededb", "#f4f4f0", "#fbfbfa"] },
+      "bone-2": { "role": "neutral", "displayName": "Bone — Muted", "canonical": "#e2e2da", "tonalRamp": ["#37372f", "#54544a", "#747467", "#969685", "#b6b6ac", "#cccdc3", "#e2e2da", "#f2f2ee"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headlines, section titles, card/component headings. Always uppercase." },
+      "body": { "displayName": "Body", "purpose": "Paragraph copy, lede text, capped at ~52ch." },
+      "label": { "displayName": "Label", "purpose": "Eyebrows, button labels, stat captions, nav links. Always uppercase, wide-tracked." }
+    },
+    "shadows": [
+      { "name": "gold-offset", "value": "6px 6px 0 0 #e0c064", "purpose": "Card/service-tile hover lift on dark sections." },
+      { "name": "gold-deep-offset", "value": "5px 5px 0 0 #a8862a", "purpose": "Button hover lift." },
+      { "name": "ink-offset", "value": "6px 6px 0 0 #111111", "purpose": "Hover lift on light/.light sections, inverted." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.2, 0.9, 0.25, 1)", "purpose": "Default transition easing." },
+      { "name": "ease-pop", "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "purpose": "Overshoot easing for hover lifts, icon nudges, transforms." },
+      { "name": "duration-fast", "value": "220ms", "purpose": "Default transition duration." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "480px" },
+      { "name": "md", "value": "600px" },
+      { "name": "tablet", "value": "700px" },
+      { "name": "lg", "value": "900px" },
+      { "name": "lg2", "value": "1000px" },
+      { "name": "xl", "value": "1100px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main CTA — champagne-gold pill with hard offset-shadow hover lift.",
+      "html": "<button class=\"ds-btn-primary\">Get In Touch</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.7rem; min-height: 44px; padding: 0.9rem 1.5rem; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 999px; background: linear-gradient(96deg, #a8862a, #e0c064 45%, #f7edd2 72%, #e0c064); color: #0b0b0c; transition: transform 220ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 220ms cubic-bezier(0.2,0.9,0.25,1); } .ds-btn-primary:hover { transform: translate(-3px, -3px); box-shadow: 5px 5px 0 0 #a8862a; } .ds-btn-primary:focus-visible { outline: 3px solid #e0c064; outline-offset: 3px; } .ds-btn-primary:active { transform: translateY(1px) scale(0.98); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary CTA — outlined, inverts to solid bone on hover.",
+      "html": "<button class=\"ds-btn-ghost\">Learn More</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 0.7rem; min-height: 44px; padding: 0.9rem 1.5rem; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 999px; background: none; border: 2px solid rgba(244,244,240,0.28); color: #f4f4f0; transition: all 220ms cubic-bezier(0.2,0.9,0.25,1); } .ds-btn-ghost:hover { background: #f4f4f0; color: #0b0b0c; border-color: #f4f4f0; transform: translate(-3px, -3px); box-shadow: 5px 5px 0 0 #a8862a; } .ds-btn-ghost:focus-visible { outline: 3px solid #e0c064; outline-offset: 3px; }"
+    },
+    {
+      "name": "Eyebrow Badge",
+      "kind": "chip",
+      "refersTo": "eyebrow",
+      "description": "Tilted sticker-style label that opens every section.",
+      "html": "<span class=\"ds-eyebrow\">◆ Our Divisions</span>",
+      "css": ".ds-eyebrow { display: inline-flex; align-items: center; gap: 0.5em; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #0b0b0c; background: #e0c064; padding: 0.45em 0.95em; border-radius: 999px; transform: rotate(-1.6deg); }"
+    },
+    {
+      "name": "Service Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Dark tonal card with a faint index numeral and hard gold-offset hover lift.",
+      "html": "<div class=\"ds-card\"><span class=\"ds-card-idx\">01</span><h4 class=\"ds-card-title\">Talent Strategy</h4><p class=\"ds-card-copy\">Positioning, negotiation, and long-term career planning.</p></div>",
+      "css": ".ds-card { position: relative; padding: 2.1rem 1.8rem 2.3rem; border: 2px solid rgba(244,244,240,0.11); border-radius: 14px; background: #121214; overflow: hidden; transition: transform 260ms cubic-bezier(0.34,1.56,0.64,1), background 220ms, border-color 220ms, box-shadow 220ms cubic-bezier(0.2,0.9,0.25,1); } .ds-card:hover { background: #191a1d; border-color: #e0c064; transform: translate(-4px, -4px); box-shadow: 6px 6px 0 0 #e0c064; } .ds-card-idx { font-family: 'Archivo Black', Impact, sans-serif; font-size: 2.6rem; line-height: 1; color: rgba(244,244,240,0.07); position: absolute; top: 1.4rem; right: 1.5rem; transition: color 220ms; } .ds-card:hover .ds-card-idx { color: rgba(224,192,100,0.22); } .ds-card-title { font-family: 'Archivo Black', Impact, sans-serif; font-size: 1.3rem; text-transform: uppercase; letter-spacing: -0.015em; margin: 1.3rem 0 0.6rem; color: #f4f4f0; } .ds-card-copy { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 0.88rem; color: rgba(244,244,240,0.58); }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Dark field with gold focus ring; 16px on mobile to prevent iOS zoom.",
+      "html": "<div class=\"ds-field\"><input class=\"ds-input\" type=\"text\" placeholder=\"Full name\" /></div>",
+      "css": ".ds-field { position: relative; } .ds-input { width: 100%; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 16px; padding: 1rem 1.1rem; background: #121214; color: #f4f4f0; border: 2px solid rgba(244,244,240,0.11); border-radius: 10px; transition: border-color 220ms; } .ds-input::placeholder { color: rgba(244,244,240,0.34); } .ds-input:focus { outline: none; border-color: #e0c064; box-shadow: 0 0 0 3px rgba(224,192,100,0.28); }"
+    },
+    {
+      "name": "Primary Nav",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Sticky nav; links become gold pills on hover.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link\" href=\"#\">Services</a><a class=\"ds-nav-link\" href=\"#\">Roster</a><a class=\"ds-nav-link\" href=\"#\">Portfolio</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 0.4rem; } .ds-nav-link { font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #f4f4f0; padding: 0.55rem 0.85rem; border-radius: 999px; transition: background 220ms, color 220ms; } .ds-nav-link:hover { color: #0b0b0c; background: #e0c064; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Acid Court",
+    "overview": "Concrete black as the court, champagne gold as the trophy flashing under the lights. The system reads as confident streetwear luxury: bold, tactile, a little brash, built for a talent-management-and-real-estate firm that earns trust through relationships and receipts, not corporate polish. It explicitly rejects generic corporate-finance minimalism — no navy-and-white advisory-firm blandness, no soft SaaS gradients, no timid restraint. Gold is used with swagger, not sparingly: eyebrows, badges, and stat blocks all wear it loud.\n\nThe system is mobile-first and fluid throughout — type sizes and section rhythm scale with clamp() rather than stepping at breakpoints, so nothing looks under-designed at any width. Physicality is the throughline: tilted sticker badges, hard offset-shadow hovers, and grain/marquee texture all say \"this was built by hand, not generated.\"",
+    "keyCharacteristics": [
+      "Concrete-black base with champagne-gold flash, warm amber used sparingly as a second voice",
+      "Archivo Black display type in uppercase, tight tracking, paired with clean Space Grotesk body",
+      "Pill-shaped buttons and badges, tilted at small deliberate angles (sticker energy)",
+      "Hard offset-shadow hovers, not soft blur — physical, not ambient",
+      "Fluid spacing/type via clamp(); almost no fixed breakpoint jumps"
+    ],
+    "rules": [
+      { "name": "The Loud Gold Rule", "body": "Champagne gold is not a rare accent here — it's allowed to dominate eyebrows, buttons, and stat blocks at once. Don't dilute it toward a \"10% accent\" convention; that reads as generic SaaS, not Acid Court.", "section": "colors" },
+      { "name": "The Uppercase Display Rule", "body": "Every .display element is uppercase with negative letter-spacing, never sentence case. Mixing case in display type breaks the poster feel.", "section": "typography" },
+      { "name": "The Hard Shadow Rule", "body": "Shadows are never soft or blurred (0 4px 24px rgba(...) ambient glows do not belong here). Every shadow is a flat, unblurred offset (Npx Npx 0 0 color) paired with a translate() on hover — it reads as a sticker lifting off a surface, not light falling on a surface. This is deliberate and structural.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use the hard, unblurred offset shadow (Npx Npx 0 0 color + translate()) for every interactive lift — it's the system's core physical signature.",
+      "Do keep display type uppercase with tight negative tracking; never mix in sentence case for headings.",
+      "Do let gold be loud — eyebrows, buttons, and stat blocks can all carry it in the same viewport.",
+      "Do apply small deliberate rotation (-1.5deg to -2.5deg) to badges and stickers for the hand-placed feel.",
+      "Do gate all hover-only effects behind (hover: hover) and (pointer: fine) so touch never gets a stuck hover state."
+    ],
+    "donts": [
+      "Don't use soft/blurred ambient shadows anywhere — it breaks the sticker-on-concrete physicality that defines this system.",
+      "Don't default to navy/corporate-advisory minimalism as a \"safer\" direction; that is the explicit anti-reference for this brand.",
+      "Don't treat amber as a second primary — it stays rare, reserved for secondary emphasis only (step dots, stat hover), or it stops reading as a deliberate second voice.",
+      "Don't introduce a step-based (non-fluid) spacing or type scale; rhythm here is clamp()-driven and continuous by design."
+    ]
+  }
+}

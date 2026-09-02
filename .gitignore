@@ -26,3 +26,7 @@ dist-ssr
 # local env
 .env
 .env.local
+
+# machine-local Claude Code / Impeccable state
+.claude/settings.local.json
+.impeccable/hook.cache.json

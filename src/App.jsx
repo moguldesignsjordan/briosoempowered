@@ -20,7 +20,7 @@ const NAV = [
 ]
 
 /* Only the parts that are not copy. Text lives in src/i18n. */
-const FEATURED = { image: baldoImg }
+const FEATURED = { image: baldoImg, site: 'https://www.baldomindset.com/' }
 
 const SERVICE_ICONS = ['compass', 'mic', 'growth', 'card', 'key', 'shield']
 
@@ -384,7 +384,9 @@ function Roster() {
 
         <div className="feature">
           <Reveal className="feature-shot" from="left">
-            <img src={FEATURED.image} alt={t.roster.alt} width="1638" height="2048" loading="lazy" />
+            <a href={FEATURED.site} target="_blank" rel="noopener noreferrer">
+              <img src={FEATURED.image} alt={t.roster.alt} width="1638" height="2048" loading="lazy" />
+            </a>
           </Reveal>
 
           <Reveal className="feature-body" delay={120} from="right">
@@ -581,16 +583,34 @@ const EMPTY = { name: '', email: '', phone: '', interest: '', message: '' }
 function Contact() {
   const { t } = useLang()
   const [form, setForm] = useState(EMPTY)
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState('idle') // idle | sending | sent | error
+  const [error, setError] = useState('')
 
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
 
-  const submit = (e) => {
+  async function submit(e) {
     e.preventDefault()
-    // No backend yet. Log the payload and confirm to the visitor.
-    console.info('Consultation request', form)
-    setSent(true)
-    setForm(EMPTY)
+    setStatus('sending')
+    setError('')
+
+    try {
+      const res = await fetch('/api/submit-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        // The API answers with a stable code so the message can be localized here.
+        throw new Error(t.contact.errors[body.code] || body.error || t.contact.errGeneric)
+      }
+
+      setStatus('sent')
+      setForm(EMPTY)
+    } catch (err) {
+      setStatus('error')
+      setError(err.message)
+    }
   }
 
   return (
@@ -605,48 +625,64 @@ function Contact() {
         </Reveal>
 
         <Reveal delay={120}>
-          {sent ? (
+          {status === 'sent' ? (
             <div className="form-sent" role="status">
               <b>{t.contact.sentTitle}</b>
               <p>{t.contact.sentBody}</p>
             </div>
           ) : (
             <form className="form" onSubmit={submit}>
-              <div className="field">
-                <input
-                  type="text" required placeholder={t.contact.name} aria-label={t.contact.name}
-                  value={form.name} onChange={set('name')}
-                />
-              </div>
-              <div className="field">
-                <input
-                  type="email" required placeholder={t.contact.email} aria-label={t.contact.email}
-                  value={form.email} onChange={set('email')}
-                />
-              </div>
-              <div className="field">
-                <input
-                  type="tel" placeholder={t.contact.phone} aria-label={t.contact.phoneLabel}
-                  value={form.phone} onChange={set('phone')}
-                />
-              </div>
-              <div className="field">
-                <select required aria-label={t.contact.interest} value={form.interest} onChange={set('interest')}>
-                  <option value="">{t.contact.interestPlaceholder}</option>
-                  <option value="talent">{t.contact.options.talent}</option>
-                  <option value="realty">{t.contact.options.realty}</option>
-                  <option value="both">{t.contact.options.both}</option>
-                  <option value="other">{t.contact.options.other}</option>
-                </select>
-              </div>
-              <div className="field">
-                <textarea
-                  placeholder={t.contact.message} aria-label={t.contact.messageLabel}
-                  value={form.message} onChange={set('message')}
-                />
-              </div>
-              <button type="submit" className="btn btn-gold">
-                {t.contact.send} <Arrow />
+              <fieldset disabled={status === 'sending'}>
+                <div className="field">
+                  <label htmlFor="c-name">{t.contact.name}</label>
+                  <input
+                    id="c-name" type="text" required maxLength={120}
+                    value={form.name} onChange={set('name')}
+                  />
+                </div>
+                <div className="field">
+                  <label htmlFor="c-email">{t.contact.email}</label>
+                  <input
+                    id="c-email" type="email" required maxLength={160}
+                    value={form.email} onChange={set('email')}
+                  />
+                </div>
+                <div className="field">
+                  <label htmlFor="c-phone">{t.contact.phoneLabel} <span className="opt">{t.submit.optional}</span></label>
+                  <input
+                    id="c-phone" type="tel" maxLength={40}
+                    value={form.phone} onChange={set('phone')}
+                  />
+                </div>
+                <div className="field">
+                  <label htmlFor="c-interest">{t.contact.interest}</label>
+                  <select id="c-interest" required value={form.interest} onChange={set('interest')}>
+                    <option value="">{t.contact.interestPlaceholder}</option>
+                    <option value="talent">{t.contact.options.talent}</option>
+                    <option value="realty">{t.contact.options.realty}</option>
+                    <option value="both">{t.contact.options.both}</option>
+                    <option value="other">{t.contact.options.other}</option>
+                  </select>
+                </div>
+                <div className="field">
+                  <label htmlFor="c-message">{t.contact.messageLabel}</label>
+                  <textarea
+                    id="c-message" maxLength={4000}
+                    value={form.message} onChange={set('message')}
+                  />
+                </div>
+              </fieldset>
+
+              {/* Bots fill this in. People never see it. */}
+              <input
+                type="text" tabIndex={-1} autoComplete="off" className="sr-only"
+                aria-hidden="true" value={form.website} onChange={set('website')}
+              />
+
+              {error && <p className="form-error" role="alert">{error}</p>}
+
+              <button type="submit" className="btn btn-gold" disabled={status === 'sending'}>
+                {status === 'sending' ? t.contact.sending : t.contact.send} <Arrow />
               </button>
               <p className="form-note">{t.contact.note}</p>
             </form>

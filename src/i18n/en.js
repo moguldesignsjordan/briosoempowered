@@ -168,9 +168,18 @@ export default {
     message: 'Tell us about you and what you need',
     messageLabel: 'Message',
     send: 'Send It',
+    sending: 'Sending…',
     note: 'Confidential. We never share your information.',
     sentTitle: 'Received.',
     sentBody: 'Thank you. A partner will reach out within one business day to schedule your consultation.',
+    errors: {
+      unconfigured: 'This form is not set up yet. Please email us directly.',
+      throttled: 'Too many requests. Try again in a minute.',
+      noName: 'A full name is required.',
+      badEmail: 'Please enter a valid email address.',
+      failed: 'Could not send right now. Please try again.',
+    },
+    errGeneric: 'Something went wrong.',
   },
 
   footer: {

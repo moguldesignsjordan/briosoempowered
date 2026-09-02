@@ -656,6 +656,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   background: var(--gold); border-radius: var(--r);
   transform: rotate(-2.5deg) translate(10px, 10px);
 }
+.feature-shot a { display: block; border-radius: var(--r); }
 .feature-shot img {
   width: 100%; height: auto;
   aspect-ratio: 4 / 5; object-fit: cover; object-position: center;

@@ -168,9 +168,18 @@ export default {
     message: 'Cuéntanos de ti y de lo que necesitas',
     messageLabel: 'Mensaje',
     send: 'Enviar',
+    sending: 'Enviando…',
     note: 'Confidencial. Nunca compartimos tu información.',
     sentTitle: 'Recibido.',
     sentBody: 'Gracias. Un socio te contactará en un día hábil para agendar tu consulta.',
+    errors: {
+      unconfigured: 'Este formulario aún no está configurado. Escríbenos directamente por correo.',
+      throttled: 'Demasiadas solicitudes. Intenta de nuevo en un minuto.',
+      noName: 'El nombre completo es obligatorio.',
+      badEmail: 'Ingresa un correo electrónico válido.',
+      failed: 'No se pudo enviar en este momento. Intenta de nuevo.',
+    },
+    errGeneric: 'Algo salió mal.',
   },
 
   footer: {
