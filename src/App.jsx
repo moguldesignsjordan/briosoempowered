@@ -125,45 +125,6 @@ function ScrollProgress() {
   return <div className="progress" aria-hidden="true"><i ref={bar} /></div>
 }
 
-const REDUCED = () =>
-  typeof window !== 'undefined' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-/* Counts a stat up once it scrolls into view. Keeps the prefix/suffix intact. */
-function CountUp({ value }) {
-  const el = useRef(null)
-
-  useEffect(() => {
-    const node = el.current
-    const match = /^(\D*)([\d.]+)(.*)$/.exec(value)
-    if (!node || !match || REDUCED() || !('IntersectionObserver' in window)) return
-
-    const [, prefix, digits, suffix] = match
-    const target = parseFloat(digits)
-    const decimals = (digits.split('.')[1] || '').length
-    let frame = 0
-
-    const io = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting) return
-      io.disconnect()
-      const start = performance.now()
-      const tick = (now) => {
-        const t = Math.min(1, (now - start) / 1100)
-        const eased = 1 - Math.pow(1 - t, 3)
-        node.textContent = prefix + (target * eased).toFixed(decimals) + suffix
-        if (t < 1) frame = requestAnimationFrame(tick)
-      }
-      node.textContent = prefix + (0).toFixed(decimals) + suffix
-      frame = requestAnimationFrame(tick)
-    }, { threshold: 0.5 })
-
-    io.observe(node)
-    return () => { io.disconnect(); if (frame) cancelAnimationFrame(frame) }
-  }, [value])
-
-  return <b ref={el}>{value}</b>
-}
-
 const Arrow = () => (
   <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor"
     strokeWidth="1.4" aria-hidden="true">
@@ -343,25 +304,6 @@ function Services() {
               <Icon name={SERVICE_ICONS[i]} />
               <h4>{s.title}</h4>
               <p>{s.copy}</p>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Stats() {
-  const { t } = useLang()
-
-  return (
-    <section className="stats">
-      <div className="wrap">
-        <div className="stats-grid">
-          {t.stats.map(([value, label], i) => (
-            <Reveal className="stat" key={label} delay={i * 80} from="zoom">
-              <CountUp value={value} />
-              <span>{label}</span>
             </Reveal>
           ))}
         </div>
@@ -815,7 +757,6 @@ function Site({ page }) {
         <Marquee />
         <Divisions />
         <Services />
-        <Stats />
         <Roster />
         <Portfolio />
         <Process />

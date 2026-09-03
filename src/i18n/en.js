@@ -87,8 +87,8 @@ export default {
         copy: 'From idea to entity. Strategy, pricing, and positioning, then the LLC, EIN, operating agreement, and banking filed clean the first time.',
       },
       {
-        title: 'Credit & Capital',
-        copy: 'Repair the profile, restructure the debt, and learn the levers. Credit is the cheapest capital you will ever raise, so we teach you to use it.',
+        title: 'Mentorship',
+        copy: 'Direct access to operators who have built and exited before, so every decision gets stress-tested against what actually works.',
       },
       {
         title: 'Real Estate & Portfolio',
@@ -100,13 +100,6 @@ export default {
       },
     ],
   },
-
-  stats: [
-    ['$480M+', 'Transacted Volume'],
-    ['120+', 'Clients Represented'],
-    ['18', 'Markets Served'],
-    ['11', 'Years Operating'],
-  ],
 
   roster: {
     eyebrow: 'The Roster',

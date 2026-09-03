@@ -615,32 +615,6 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 
 /* ============================================================
-   STATS   2 → 4  (2×2 reads better than a 4-wide squeeze on phones)
-   ============================================================ */
-
-.stats { position: relative; padding: 2.4rem 0; background: var(--gold); }
-@media (min-width: 700px) { .stats { padding: 3.4rem 0; } }
-
-.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem 1rem; }
-@media (min-width: 900px) { .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 1rem; } }
-
-.stat { text-align: center; padding: .4rem .5rem; }
-.stat b {
-  display: block; font-family: var(--display); font-weight: 400;
-  font-size: clamp(2rem, 9vw, 4.2rem); line-height: 1;
-  letter-spacing: -0.03em; color: #0b0b0c;
-  transition: transform 260ms var(--pop), color var(--fast);
-}
-.stat span {
-  display: block; margin-top: .55rem; font-size: .58rem; font-weight: 700;
-  letter-spacing: .14em; text-transform: uppercase; color: rgba(11,11,12,.62);
-}
-@media (min-width: 700px) { .stat span { font-size: .64rem; letter-spacing: .18em; margin-top: .7rem; } }
-@media (hover: hover) and (pointer: fine) {
-  .stat:hover b { transform: translateY(-5px) rotate(-2deg); color: var(--amber); }
-}
-
-/* ============================================================
    ROSTER (single featured client)
    ============================================================ */
 

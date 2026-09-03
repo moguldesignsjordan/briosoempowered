@@ -87,8 +87,8 @@ export default {
         copy: 'De la idea a la entidad. Estrategia, precios y posicionamiento, luego la LLC, el EIN, el acuerdo operativo y la cuenta bancaria, bien hechos desde la primera vez.',
       },
       {
-        title: 'Crédito y Capital',
-        copy: 'Reparamos el perfil, reestructuramos la deuda y te enseñamos las palancas. El crédito es el capital más barato que vas a levantar, así que te enseñamos a usarlo.',
+        title: 'Mentoría',
+        copy: 'Acceso directo a operadores que ya han construido y vendido negocios antes, para que cada decisión se ponga a prueba contra lo que de verdad funciona.',
       },
       {
         title: 'Bienes Raíces y Portafolio',
@@ -100,13 +100,6 @@ export default {
       },
     ],
   },
-
-  stats: [
-    ['$480M+', 'Volumen Transaccionado'],
-    ['120+', 'Clientes Representados'],
-    ['18', 'Mercados Atendidos'],
-    ['11', 'Años Operando'],
-  ],
 
   roster: {
     eyebrow: 'Los Clientes',
